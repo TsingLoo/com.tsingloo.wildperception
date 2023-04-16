@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "com.unity.perception": "1.0.0-preview.1"
+  },
+  "description": "Enhancing tool for generating large-scale Multi-View Video Dataset in the style of the wildtrack dataset.",
+  "displayName": "WildPerception",
+  "name": "com.tsingloo.wildperception",
+  "unity": "2022.2",
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/TsingLoo/com.tsingloo.wildperception.git"
+  },
+  "unityRelease": "3f1",
+  "documentationUrl": "https://www.tsingloo.com",
+  "changelogUrl": "https://www.tsingloo.com",
+  "version": "0.1.0",
+  "author": "TsingLoo <TsingLoo@Outlook.com> (https://www.tsingloo.com)"
+}
