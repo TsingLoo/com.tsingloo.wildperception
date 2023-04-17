@@ -29,7 +29,7 @@ namespace WildPerception {
 	    public float smallestZ;
 	
 	    //Change the outter bound area
-	    public float outterBoundRadius = 3;
+	    public float outterBoundRadius = 25;
 	
 	    public float walkingSpeed;
 	  

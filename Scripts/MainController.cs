@@ -37,12 +37,12 @@ namespace WildPerception {
 	            obj= new GameObject(objname);
 	        }
 	    }
-	
-    #endregion
-	
-	    CameraManager cameraManager;
-	    public PeopleManager peopleManager;
-	    CalibrateTool calibrateTool;
+
+        #endregion
+
+        [HideInInspector] public CameraManager cameraManager;
+	    [HideInInspector] public PeopleManager peopleManager;
+	    [HideInInspector] public CalibrateTool calibrateTool;
 	
 	    //[HideInInspector] public string Image_subsets;
 	    [HideInInspector] public string matchings;

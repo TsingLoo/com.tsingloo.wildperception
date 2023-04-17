@@ -872,12 +872,7 @@ PrefabInstance:
     - target: {fileID: 911568766210223017, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: outterBoundRadius
-      value: 9.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 911568766210223018, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: BeginFrameCount
-      value: 200
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 911568766210223018, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
@@ -892,7 +887,7 @@ PrefabInstance:
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: humanModels_Folder
-      value: C:\FYP\WildPerception\Assets\WildPerception\Resources\Models
+      value: C:\FYP\WildPerception\Assets\WildPerceptionRepo\Resources\Models
       objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}

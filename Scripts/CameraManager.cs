@@ -60,12 +60,9 @@ namespace WildPerception {
 	            case (int)eCameraPlaceType.Ellipse_Auto:
 	
 	                controller.HandPlacedCameraParent.SetActive(false);
-	                //Destroy(MainController.Instance.HandPlacedCameraParent);
-	
-	                //Debug.Log("[Debug]" + CameraPrefab_Normal.ToString());
 	                for (int i = 0; i < level; i++)
 	                {
-	                    PlaceObjByEllipse(center, numsPerLevel, ref cams, controller, majorAxis * CalibrateTool.Instance.Scaling, majorAxis, (heightFirstLevel + i * hPerLevel) / CalibrateTool.Instance.Scaling);
+	                    PlaceObjByEllipse(center, numsPerLevel, ref cams, controller, majorAxis / CalibrateTool.Instance.Scaling, minorAxis / CalibrateTool.Instance.Scaling, (heightFirstLevel + i * hPerLevel) / CalibrateTool.Instance.Scaling);
 	                }
 	                break;
 	
@@ -117,15 +114,15 @@ namespace WildPerception {
         /// <param name="b"></param>
         void PlaceObjByEllipse(Transform lookatTransform, int num, ref List<Camera> cams, MainController controller, float a = 3, float b = 4, float height = 2.8f)
         {
+            float step_angle = 360 / num;
             for (int i = 0; i < num; i++)
             {
-                float step_angle = 360 / num;
                 float angle = (i * step_angle / 180) * Mathf.PI;
                 float xx = a * Mathf.Cos(angle);
                 float yy = b * Mathf.Sin(angle);
 
                 Vector3 pos = new Vector3(xx, height, yy);
-
+                //Debug.Log("[]" + xx);
 
                 var Obj = Instantiate(CameraPrefab, lookatTransform.position + pos, Quaternion.identity);
                 cams.Add(Obj.GetComponent<Camera>());
@@ -134,8 +131,6 @@ namespace WildPerception {
                 Obj.name = "Camera" + (Obj.GetOrAddComponent<MatchingsExporter>().cameraIndex).ToString();
                 // Obj.transform.LookAt(nert);
                 Obj.transform.LookAt(lookatTransform.position);
-
-
             }
         }
 
@@ -144,27 +139,28 @@ namespace WildPerception {
 	    {
 	        if (drawEllipseGizmos)
 	        {
-	
 	            MainController mainController = GetComponent<MainController>();
+				CalibrateTool cbt = GetComponent<CalibrateTool>();
 	            if (mainController.Center_HumanSpawn_CameraLookAt != null)
 	            {
-	                Vector3 center = mainController.Center_HumanSpawn_CameraLookAt.transform.position + new Vector3(0, heightFirstLevel, 0);
+	                Vector3 center = mainController.Center_HumanSpawn_CameraLookAt.transform.position + new Vector3(0, heightFirstLevel, 0)/cbt.Scaling;
 	                float stepAngle = 360f / numsPerLevel;
 	
 	                for (int i = 0; i < numsPerLevel; i++)
 	                {
-	                    // Calculate the angle for the current camera
-	                    float angle = Mathf.Deg2Rad * (i * stepAngle);
-	
-	                    // Calculate the position of the camera on the ellipse
-	                    float xx = majorAxis * 0.5f * Mathf.Cos(angle);
-	                    float yy = minorAxis * 0.5f * Mathf.Sin(angle);
+                        // Calculate the angle for the current camera
+                        float angle = (i * stepAngle / 180) * Mathf.PI;
+
+                        // Calculate the position of the camera on the ellipse
+                        float xx = majorAxis * Mathf.Cos(angle) / cbt.Scaling ;
+	                    float yy = minorAxis  * Mathf.Sin(angle) / cbt.Scaling;
+						//Debug.Log(xx);
 	                    Vector3 cameraPosition = new Vector3(center.x + xx, center.y, center.z + yy);
 	
 	                    // Draw a gizmo at the position of the camera on the ellipse
 	                    Gizmos.color = Color.red;
 	                    Gizmos.DrawSphere(cameraPosition, 0.2f);
-						Gizmos.DrawLine(cameraPosition, center - new Vector3(0, heightFirstLevel, 0));
+						Gizmos.DrawLine(cameraPosition, center - new Vector3(0, heightFirstLevel, 0) / cbt.Scaling);
 	                }
 	            }
 	            else if (popWarning)
@@ -175,7 +171,6 @@ namespace WildPerception {
 	                    popWarning = false;
 	                }
 	            }
-	
 	        }
 	    }	
 	}	

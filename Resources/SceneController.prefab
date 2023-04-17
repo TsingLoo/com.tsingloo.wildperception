@@ -102,7 +102,7 @@ MonoBehaviour:
   smallestX: -5.67
   largestZ: 5.77
   smallestZ: -4.76
-  outterBoundRadius: 3
+  outterBoundRadius: 25
   walkingSpeed: 1
   bounds_list: []
   PID_List: 
@@ -124,7 +124,6 @@ MonoBehaviour:
   targetParentFolder: ../calib/
   chessboardGenerateCenter: {fileID: 0}
   Scaling: 1
-  enableLog: 0
   updateChessboardInterval: 0.2
   chessboardCount: 50
   SQUARE_SIZE: 0.14
