@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.18533, g: 324.8582, b: 429.96686, a: 1}
+  m_IndirectSpecularColor: {r: 262.38358, g: 325.10843, b: 430.30963, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -887,7 +887,7 @@ PrefabInstance:
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: humanModels_Folder
-      value: C:\FYP\WildPerception\Assets\WildPerceptionRepo\Resources\Models
+      value: com.tsingloo.wildperception\Resources\Models
       objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}

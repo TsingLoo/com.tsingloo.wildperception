@@ -14,7 +14,7 @@ namespace WildPerception {
     #region Inspector
 	
 	    public string MultiviewX_Folder = "D:\\PycharmProjects\\MultiviewX_FYP";
-	    public string humanModels_Folder = "C:\\FYP\\FYP_UnityProjects\\Assets\\Bundles\\Resources\\Prefabs";
+	    public string humanModels_Folder = "com.tsingloo.wildperception\\Resources\\Models";
 	
 	    public GameObject GridOrigin_OpenCV;
 	    public GameObject Center_HumanSpawn_CameraLookAt;
