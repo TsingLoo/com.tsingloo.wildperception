@@ -48,11 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MultiviewX_Folder: D:\PycharmProjects\MultiviewX_FYP
-  humanModels_Folder: C:\FYP\FYP_UnityProjects\Assets\Bundles\Resources\Prefabs
+  humanModels_Folder: com.tsingloo.wildperception\Resources\Models
   GridOrigin_OpenCV: {fileID: 0}
   Center_HumanSpawn_CameraLookAt: {fileID: 0}
   HandPlacedCameraParent: {fileID: 0}
+  cameraManager: {fileID: 0}
   peopleManager: {fileID: 0}
+  calibrateTool: {fileID: 0}
   matchings: 
   validate: 
 --- !u!114 &911568766210223018
