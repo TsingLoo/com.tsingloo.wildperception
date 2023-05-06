@@ -207,7 +207,7 @@ namespace WildPerception
 	        {
 	            if (cam.pixelHeight != IMAGE_HEIGHT || cam.pixelWidth != IMAGE_WIDTH)
 	            {
-					UtilExtension.QuitWithLogError($"[CalibrateTool]Config Image size({IMAGE_WIDTH},{IMAGE_HEIGHT}) is not the same with Game View size({cam.pixelWidth},{cam.pixelHeight})");
+					UtilExtension.QuitWithLogWarning($"[CalibrateTool]Config Image size({IMAGE_WIDTH},{IMAGE_HEIGHT}) is not the same with Game View size({cam.pixelWidth},{cam.pixelHeight})");
 	            }
 	            WriteWorldPointsScreenPos(cam, cameraIndex, markPoints, nameof(markPoints));
 	            WriteWorldPointsScreenPos(cam, cameraIndex,validatePoints,nameof(validatePoints));

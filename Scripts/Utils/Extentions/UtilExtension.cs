@@ -4,13 +4,13 @@ using UnityEngine;
 
  namespace WildPerception {	public static class UtilExtension
 {
-	public static void QuitWithLogError(string msg)
+	public static void QuitWithLogWarning(string msg)
 	{
-        Debug.LogError(msg);
+        Debug.LogWarning(msg);
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
-	        Application.Quit();
+	    Application.Quit();
 #endif
     }
 

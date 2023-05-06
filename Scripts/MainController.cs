@@ -12,7 +12,7 @@ namespace WildPerception {
 	{
     #region Inspector
 	
-	    public string MultiviewX_Folder = "D:\\PycharmProjects\\MultiviewX_FYP";
+	    public string MultiviewX_Perception_Folder = "D:\\PycharmProjects\\MultiviewX_Perception";
 	    public string humanModels_Folder = "com.tsingloo.wildperception\\Resources\\Models";
 	
 	    public GameObject GridOrigin_OpenCV;
@@ -50,8 +50,8 @@ namespace WildPerception {
 	    private void Awake()
 	    {
 	        AssignTransform();
-	        matchings = Path.Join(MultiviewX_Folder, nameof(matchings));
-	        validate = Path.Join(MultiviewX_Folder, nameof(validate));
+	        matchings = Path.Join(MultiviewX_Perception_Folder, nameof(matchings));
+	        validate = Path.Join(MultiviewX_Perception_Folder, nameof(validate));
 	        Prepare();
 	    }
 	
@@ -91,7 +91,7 @@ namespace WildPerception {
 	        cameraManager.PlaceCamera(this);
 	
 	        calibrateTool.camerasToCalibrate = cameraManager.cams.ToList();
-	        calibrateTool.targetParentFolder = MultiviewX_Folder;
+	        calibrateTool.targetParentFolder = MultiviewX_Perception_Folder;
 	        calibrateTool.gridOrigin = GridOrigin_OpenCV.transform;
 
 			peopleManager.model_PATH = humanModels_Folder;
@@ -108,7 +108,7 @@ namespace WildPerception {
 	
 	        if(DatasetCapture.activateEndpoint.GetType() ==  typeof(SoloEndpoint)) 
 	        {
-				UtilExtension.QuitWithLogError($"[{nameof(MainController)}]SoloEndpoint is currently not supported, please turn to Edit => Project Settings => Perception => Change Endpoint Type to use the Perception Endpoint");
+				UtilExtension.QuitWithLogWarning($"[{nameof(MainController)}]SoloEndpoint is currently not supported, please turn to Edit => Project Settings => Perception => Change Endpoint Type to use the Perception Endpoint");
 	        }
 	    }
 	}

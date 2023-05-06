@@ -32,7 +32,10 @@ namespace WildPerception
         // Update is called once per frame
         void Update()
         {
-
+            if (animator == null)
+            {
+                return;
+            }
             int velocity = Animator.StringToHash("Velocity");
             if (transform.position.x == nav.destination.x && transform.position.z == nav.destination.z)
             {
