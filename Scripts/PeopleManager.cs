@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -167,8 +166,7 @@ namespace WildPerception {
             }
             else
             {
-                Debug.LogWarning("File path does not contain 'Resources' folder.");
-				return;
+				UtilExtension.QuitWithLogError("File path does not contain 'Resources' folder. Check path");
             }
             humanModel = humanModel.Replace(".prefab", "");
             Debug.Log(humanModel);
@@ -180,11 +178,18 @@ namespace WildPerception {
 	        }
 	        //GameObject humanPrefab = Resources.Load<GameObject>(PATH + Randoms(0, modelCount, preset_humans).ToString());
 	        GameObject human = Instantiate(humanPrefab, SpawnPosition, UnityEngine.Random.rotation);
-			var ani = human.GetOrAddComponent<Animator>();
-			if (ani.runtimeAnimatorController == null)
-			{
-				ani.runtimeAnimatorController = defaultAnimator;
-			}
+			var ani = human.GetComponent<Animator>();
+            if (ani != null && ani.avatar != null && ani.avatar.isValid)
+            {
+                if (ani.runtimeAnimatorController == null)
+                {
+                    ani.runtimeAnimatorController = defaultAnimator;
+                }
+            }
+            else
+            {
+                UtilExtension.QuitWithLogError($"{humanModel} is not a human model with a valid Avatar.");
+            }
 
 			var nav = human.GetOrAddComponent<NavMeshAgent>();
 	        var bound = human.GetOrAddComponent<PersonBound>();

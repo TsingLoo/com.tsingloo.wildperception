@@ -69,12 +69,7 @@ namespace WildPerception {
 	            case (int)eCameraPlaceType.ByHand:
 	                if (handPlacedCameraParent == null || handPlacedCameraParent.childCount == 0)
 	                {
-	                    Debug.LogError($"[{nameof(CameraManager)}]You are setting cams in scene by hand. Please check {nameof(handPlacedCameraParent)}");
-#if UNITY_EDITOR
-	                    EditorApplication.ExitPlaymode();
-#else
-	            Application.Quit();
-#endif
+						UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}]You are setting cams in scene by hand. Please check {nameof(handPlacedCameraParent)}");
 	                }
 	                else
 	                {
@@ -87,12 +82,7 @@ namespace WildPerception {
 	                break;
 	
 	            default:
-	                Debug.LogWarning("NO TARGET CAMERA PLACEMENT CASE");
-#if UNITY_EDITOR
-	                EditorApplication.ExitPlaymode();
-#else
-	            Application.Quit();
-#endif
+					UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}]NO TARGET CAMERA PLACEMENT CASE");
 	                break;
 	        }
 	    }

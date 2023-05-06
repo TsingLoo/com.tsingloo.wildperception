@@ -1,6 +1,5 @@
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.GroundTruth.Consumers;
@@ -109,12 +108,7 @@ namespace WildPerception {
 	
 	        if(DatasetCapture.activateEndpoint.GetType() ==  typeof(SoloEndpoint)) 
 	        {
-	            Debug.LogError($"[{nameof(MainController)}]SoloEndpoint is currently not supported, please turn to Edit => Project Settings => Perception => Change Endpoint Type to use the Perception Endpoint");
-#if UNITY_EDITOR
-	            EditorApplication.ExitPlaymode();
-#else
-	            Application.Quit();
-#endif
+				UtilExtension.QuitWithLogError($"[{nameof(MainController)}]SoloEndpoint is currently not supported, please turn to Edit => Project Settings => Perception => Change Endpoint Type to use the Perception Endpoint");
 	        }
 	    }
 	}
