@@ -9,7 +9,7 @@ namespace WildPerception {
 		/// <summary>
 		/// Automatically managed by MainController, the modification of this in inspector will be override 
 		/// </summary>
-	    [HideInInspector] public int cameraIndex;
+	    [HideInInspector] public int cameraIndex = -1;
 		/// <summary>
 		/// Automatically managed by MainController, the modification of this in inspector will be override
 		/// </summary>
@@ -34,14 +34,19 @@ namespace WildPerception {
 	    // Use this for initialization
 	    void Start()
 	    {
-	        pCam.id = cameraIndex.ToString();
-	        InitTextFile(filePath, ".txt", ref sw_2D);
-	        InitTextFile(filePath, "_3D.txt", ref sw_3D);
-	        frameIndex = -frameBias;
-        }
+		    if (cameraIndex != -1)
+		    {
+			    pCam.id = cameraIndex.ToString();
+			    InitTextFile(filePath, ".txt", ref sw_2D);
+			    InitTextFile(filePath, "_3d.txt", ref sw_3D);
+			    frameIndex = -frameBias;   
+		    }
+	    }
 	
 	    void Update()
 	    {
+		    if(cameraIndex == -1) return;
+		    
 	        if (pCam.SensorHandle.ShouldCaptureThisFrame)
 	        {
 	            ExportThisFrameHandler();

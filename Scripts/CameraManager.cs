@@ -75,8 +75,10 @@ namespace WildPerception {
 	                {
 	                    for (int i = 0; i < handPlacedCameraParent.childCount; i++)
 	                    {
-	                        handPlacedCameraParent.GetChild(i).GetComponent<MatchingsExporter>().SetMatchingsExporter(i + 1,controller);
-	                        cams.Add(handPlacedCameraParent.GetChild(i).GetComponent<Camera>());
+		                    var childCamera = handPlacedCameraParent.GetChild(i);
+		                    if (!childCamera.gameObject.activeSelf) continue;
+		                    childCamera.GetComponent<MatchingsExporter>().SetMatchingsExporter(i + 1,controller);
+		                    cams.Add(handPlacedCameraParent.GetChild(i).GetComponent<Camera>());
 	                    }
 	                }
 	                break;
