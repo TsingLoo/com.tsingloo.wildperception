@@ -6,8 +6,14 @@ namespace WildPerception {
 	
 	public class MatchingsExporter : MonoBehaviour
 	{
-	    public int cameraIndex;
-	    public string filePath = @"\matchings";
+		/// <summary>
+		/// Automatically managed by MainController, the modification of this in inspector will be override 
+		/// </summary>
+	    [HideInInspector] public int cameraIndex;
+		/// <summary>
+		/// Automatically managed by MainController, the modification of this in inspector will be override
+		/// </summary>
+	    [HideInInspector] public string filePath = @"\matchings";
 	    Camera cam;
 	    PerceptionCamera pCam;
 		CameraManager cameraManager;
