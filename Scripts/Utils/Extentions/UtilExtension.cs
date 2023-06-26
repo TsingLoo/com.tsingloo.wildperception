@@ -2,60 +2,60 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
- namespace WildPerception {	public static class UtilExtension
-{
-	public static void QuitWithLogWarning(string msg)
-	{
-        Debug.LogWarning(msg);
+namespace WildPerception {	public static class UtilExtension
+    {
+        public static void QuitWithLogError(string msg)
+        {
+            Debug.LogError(msg);
 #if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
+            EditorApplication.ExitPlaymode();
 #else
-	    Application.Quit();
+	        Application.Quit();
 #endif
-    }
+        }
 
         public static TValue TryGetValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
-	{
-	    /// <summary>
-	    /// 扩展字典类中的TryGetValue方法
-	    /// 可以直接通过给出key返回value,而不是像原方法一样返回bool值
-	    /// </summary>
-	    /// <typeparam name="TKey"></typeparam>
-	    /// <typeparam name="TValue"></typeparam>
-	    /// <param name="dict"></param>
-	    /// <param name="key"></param>
-	    /// <returns></returns>
+        {
+            /// <summary>
+            /// 扩展字典类中的TryGetValue方法
+            /// 可以直接通过给出key返回value,而不是像原方法一样返回bool值
+            /// </summary>
+            /// <typeparam name="TKey"></typeparam>
+            /// <typeparam name="TValue"></typeparam>
+            /// <param name="dict"></param>
+            /// <param name="key"></param>
+            /// <returns></returns>
 	
-	    TValue value;
-	    dict.TryGetValue(key, out value);
+            TValue value;
+            dict.TryGetValue(key, out value);
 	
-	    return value;
-	}
+            return value;
+        }
 	
-	public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
-	{
-	    T component = obj.GetComponent<T>();
-	    if (component == null)
-	    {
-	        return obj.AddComponent<T>();
-	    }
+        public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
+        {
+            T component = obj.GetComponent<T>();
+            if (component == null)
+            {
+                return obj.AddComponent<T>();
+            }
 	
-	    return component;
-	}
+            return component;
+        }
 	
-	public static void SafeSetActive(UnityEngine.Object obj, bool active) 
-	{
-	    if (obj != null)
-	    {
-	        if (obj is GameObject)
-	        {
-	            ((GameObject)obj).SetActive(active);
-	        }
-	        else if (obj is Component)
-	        {
-	            ((GameObject)obj).gameObject.SetActive(active);
-	        }
-	    }
-	}
-}
+        public static void SafeSetActive(UnityEngine.Object obj, bool active) 
+        {
+            if (obj != null)
+            {
+                if (obj is GameObject)
+                {
+                    ((GameObject)obj).SetActive(active);
+                }
+                else if (obj is Component)
+                {
+                    ((GameObject)obj).gameObject.SetActive(active);
+                }
+            }
+        }
+    }
 }

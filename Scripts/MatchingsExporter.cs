@@ -71,7 +71,7 @@ namespace WildPerception {
 	    {
 	        if (frameIndex >= 0)
 	        {
-	            Debug.Log($"[{nameof(MatchingsExporter)}][IO] Export this frame : " + frameIndex.ToString());	
+	            Debug.Log($"[{nameof(MatchingsExporter)}][IO]{gameObject.name} Export this frame : " + frameIndex.ToString());	
 	            //Debug.Log("[IO]Export matchings for this frame : " + (Time.frameCount - CameraManager.Instance.BeginFrameCount).ToString());
 	
 	                foreach (var bound in peopleManager.bounds_list)
@@ -125,7 +125,7 @@ namespace WildPerception {
 	    {
 	        FinishFile(sw_2D);
 	        FinishFile(sw_3D);
-	        Debug.Log("[IO] End export");
+	        Debug.Log($"[IO]{gameObject.name} End export");
 	    }
 	
 	}

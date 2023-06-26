@@ -166,7 +166,7 @@ namespace WildPerception {
             }
             else
             {
-				UtilExtension.QuitWithLogWarning($"[{nameof(PeopleManager)}] File path does not contain 'Resources' folder. Check path Human Models_Folder");
+				UtilExtension.QuitWithLogError($"[{nameof(PeopleManager)}] File path does not contain 'Resources' folder. Check path Human Models_Folder");
 			}
             humanModel = humanModel.Replace(".prefab", "");
             Debug.Log(humanModel);
@@ -188,7 +188,7 @@ namespace WildPerception {
             }
             else
             {
-                UtilExtension.QuitWithLogWarning($"[{nameof(PeopleManager)}] {humanModel} is not a human model with a valid Avatar. Check path Human Models_Folder");
+                UtilExtension.QuitWithLogError($"[{nameof(PeopleManager)}] {humanModel} is not a human model with a valid Avatar. Check path Human Models_Folder");
                 return;
             }
 

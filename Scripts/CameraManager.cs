@@ -69,7 +69,7 @@ namespace WildPerception {
 	            case (int)eCameraPlaceType.ByHand:
 	                if (handPlacedCameraParent == null || handPlacedCameraParent.childCount == 0)
 	                {
-						UtilExtension.QuitWithLogWarning($"[{nameof(CameraManager)}]You are setting cams in scene by hand. Please check {nameof(handPlacedCameraParent)}");
+						UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}]You are setting cams in scene by hand. Please check {nameof(handPlacedCameraParent)}");
 	                }
 	                else
 	                {
@@ -84,7 +84,7 @@ namespace WildPerception {
 	                break;
 	
 	            default:
-					UtilExtension.QuitWithLogWarning($"[{nameof(CameraManager)}]NO TARGET CAMERA PLACEMENT CASE");
+					UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}]NO TARGET CAMERA PLACEMENT CASE");
 	                break;
 	        }
 	    }
@@ -118,7 +118,7 @@ namespace WildPerception {
 
                 var Obj = Instantiate(CameraPrefab, lookatTransform.position + pos, Quaternion.identity);
                 cams.Add(Obj.GetComponent<Camera>());
-                Obj.GetComponent<Camera>().targetDisplay = i;
+                //Obj.GetComponent<Camera>().targetDisplay = i;
                 Obj.GetOrAddComponent<MatchingsExporter>().SetMatchingsExporter(cams.Count, controller);
                 Obj.name = "Camera" + (Obj.GetOrAddComponent<MatchingsExporter>().cameraIndex).ToString();
                 // Obj.transform.LookAt(nert);

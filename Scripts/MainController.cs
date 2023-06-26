@@ -108,7 +108,7 @@ namespace WildPerception {
 	
 	        if(DatasetCapture.activateEndpoint.GetType() ==  typeof(SoloEndpoint)) 
 	        {
-				UtilExtension.QuitWithLogWarning($"[{nameof(MainController)}]SoloEndpoint is currently not supported, please turn to Edit => Project Settings => Perception => Change Endpoint Type to use the Perception Endpoint");
+				UtilExtension.QuitWithLogError($"[{nameof(MainController)}] SoloEndpoint is currently not supported, please turn to Edit => Project Settings => Perception => Change Endpoint Type to use the Perception Endpoint");
 	        }
 	    }
 	}
