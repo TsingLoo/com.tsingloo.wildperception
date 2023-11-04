@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Perception.GroundTruth;
 
 namespace WildPerception {	
@@ -18,7 +19,11 @@ namespace WildPerception {
 	    PerceptionCamera pCam;
 		CameraManager cameraManager;
 		PedestriansManager pedestriansManager;
-	
+
+		public UnityEvent<int> EndExportEvent;
+
+		[HideInInspector] public int totalFramesCount = int.MaxValue;
+		
 	    int frameBias = 0;
 	    int frameIndex = 0;
 	
@@ -34,6 +39,7 @@ namespace WildPerception {
 	    // Use this for initialization
 	    void Start()
 	    {
+		    
 		    if (cameraIndex != -1)
 		    {
 			    pCam.id = cameraIndex.ToString();
@@ -56,20 +62,27 @@ namespace WildPerception {
 	
 	    private void OnDisable()
 	    {
-	        EndExportHandler();
+	        EndExportHandler(frameIndex);
 	    }
 	
-	    public void SetMatchingsExporter(int cameraIndex, MainController controller)
+	    public void SetMatchingsExporter(int cameraIndex, int totalCount ,  MainController controller)
 	    { 
 	        this.cameraIndex = cameraIndex;
 	        //Obj.name = "Camera" + (Obj.GetOrAddComponent<MatchingsExporter>().cameraIndex).ToString();
 	        this.filePath = controller.matchings;
 			pedestriansManager = controller.pedestriansManager;
+			this.totalFramesCount = totalCount;
 	    }
 	
 	    void ExportThisFrameHandler()
 	    {
-	        if (frameIndex >= 0)
+		    if (frameIndex + 1 >= totalFramesCount)
+		    {
+			    EndExportHandler(frameIndex);
+			    return;
+		    }
+
+		    if (frameIndex >= 0)
 	        {
 	            Debug.Log($"[{nameof(MatchingsExporter)}][IO]{gameObject.name} Export this frame : " + frameIndex.ToString());	
 	            //Debug.Log("[IO]Export matchings for this frame : " + (Time.frameCount - CameraManager.Instance.BeginFrameCount).ToString());
@@ -121,12 +134,12 @@ namespace WildPerception {
 	        sw.WriteLine(str_info);
 	    }
 	
-	    void EndExportHandler()
+	    void EndExportHandler(int frameIndex)
 	    {
-	        FinishFile(sw_2D);
+		    FinishFile(sw_2D);
 	        FinishFile(sw_3D);
-	        Debug.Log($"[IO]{gameObject.name} End export");
+	        EndExportEvent?.Invoke(frameIndex + 1);
+	        //UtilExtension.QuitWithLog($"[IO] {gameObject.name} End export at {frameCount}");
 	    }
-	
 	}
 }

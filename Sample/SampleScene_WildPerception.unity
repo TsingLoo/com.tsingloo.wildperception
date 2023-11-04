@@ -869,6 +869,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 911568766210223018, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      propertyPath: totalwantedFramesCount
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: GridOrigin_OpenCV

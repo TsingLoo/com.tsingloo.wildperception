@@ -6,10 +6,8 @@ using UnityEngine;
 	{
 	    public int PID;
 	    // [SerializeField] Camera cam;
-	
-	    //8����־λ ��������scene��Ԥ��
+	    
 	    Vector3[] points;
-	    List<GameObject> obj_points = new List<GameObject> ();
 	    Vector2[] points2D;
 	
 	    public Vector3 gridOriginPos;
@@ -21,8 +19,8 @@ using UnityEngine;
 	    string tuple_3D = "";
 	
 	    DynSpownCollider dsc;
-	    CameraManager cameraManager;
-		MainController controller;
+	    //CameraManager cameraManager;
+
 	
 	
 	    private void Awake()
@@ -30,15 +28,11 @@ using UnityEngine;
 	        dsc = gameObject.AddComponent<DynSpownCollider>();
 	        dsc.target = gameObject;
 	        dsc.SpownCollider();
-			controller = GetComponent<MainController>();
 	    }
 	
 	    void Start()
 	    {
-	
-	        cameraManager = CameraManager.Instance;
-	        //��ȡBoxCollider�������������ṩ��Χ�У��������������
-	        cube = gameObject.GetComponent<BoxCollider>();
+		    cube = gameObject.GetComponent<BoxCollider>();
 	        cube.isTrigger = true;
 	        scaling = CalibrateTool.Instance.Scaling;
 	        //UpdateDataTuple();
@@ -99,7 +93,7 @@ using UnityEngine;
 	        //float Ybias = points[0].y;
 	        float Ybias = 0;
 	
-	        //д��˸��������������
+
 	        for (int i = 0; i < points.Length; i++)
 	        {
 	            //points[i] = points[i] / scaling;
@@ -115,7 +109,7 @@ using UnityEngine;
 	        }
 	
 	        //transform.position = transform.position / scaling;
-	        //д��ŵ׵������na
+
 	        AddPropertyToTuple(((transform.position.x  - gridOriginPos.x) / scaling).ToString(), ref tuple_3D);
 	        AddPropertyToTuple(((transform.position.z  - gridOriginPos.z) / scaling).ToString(), ref tuple_3D);
 	        AddPropertyToTuple(((transform.position.y  - Ybias - gridOriginPos.y) / scaling).ToString(), ref tuple_3D);

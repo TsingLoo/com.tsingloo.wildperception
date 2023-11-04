@@ -4,12 +4,10 @@ using UnityEngine.AI;
 
 namespace WildPerception 
 {
-    public class PedestrianController : MonoBehaviour
+    public class GoRandomBasePedestrianBehaviour : BasePedestrianBehaviour
     {
-        public PedestriansManager pedestriansManager;
         NavMeshAgent nav;
-        private Animator animator;
-
+        
         [Range(-0.2f, 0.2f)]
         [SerializeField] private float walkingSpeedBias;
 

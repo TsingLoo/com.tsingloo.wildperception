@@ -6,7 +6,7 @@ WildPerception 是一个利用 [Unity Perception Package](https://github.com/Uni
 
 1. 原 MultiviewX_FYP 现更名为 [MultiviewX_Perception](https://github.com/TsingLoo/MultiviewX_Perception)
 2. 原 [CalibrateTool](http://www.tsingloo.com/2023/03/01/0a2bf39019914a06954a4506b9f0ca37/) 已集成到了此处，将不再独立导出
-3. 开发使用的 Editor 版本为 2022.2.12，不保证之前版本（尤其是2022.2之前）的表现。 Perception 要求一定版本的 HDRP 。
+3. 开发使用的 Editor 版本为 2022.3.3f1，不保证之前版本（尤其是2022.2之前）的表现。 Perception 要求一定版本的 HDRP 。
 
 # Import
 
@@ -75,13 +75,13 @@ SceneController 集成了所有的配置与功能。
 
 ### Main Controller
 
-![MainController 是 SceneController上挂载的一个组件](http://images.tsingloo.com/image-20230417100723071.png)
+![MainController 是 SceneController上挂载的一个组件](http://images.tsingloo.com/image-20231105010255315.png)
 
 点击 **Init Scene**，场景中会自动生成所需的GameObject，请在场景中将这些 GameObject 置于所需的位置，随后点击 **Assign Transfrom** 
 
 请设置 MultiviewX_Perception 项目的**绝对路径**，
 
-请设置 Human Models_Folder 的**绝对路径**，此**路径务必在一个名为Resources的文件夹下**，**且此文件夹中有且仅有人物模型的预制体(.prefab)，而非.fbx等模型文件**。若您的项目中还没有人物模型，可以使用示例模型，其在 *com.tsingloo.wildperception-main\Resources\Models* 下，请使用其绝对路径。
+若使用 LocalFilePedestrianModelProvider, 请设置 Mode_PATH 的**绝对路径**，此**路径务必在一个路径包含"Resources/Models"的文件夹下**，**且此文件夹中有且仅有人物模型的预制体(.prefab)，而非.fbx等模型文件**。若您的项目中还没有人物模型，可以使用示例模型，其在 *com.tsingloo.wildperception-main\Resources\Models* 下，请使用其绝对路径。
 
 ![设置相关路径](http://images.tsingloo.com/image-20230417101204775.png)
 
@@ -128,7 +128,7 @@ Camera Manager 管理并控制着相机相关的内容，您可以在这里配�
 
 
 
-## People Manager 
+## Pedestrians Manager 
 
 此处您可以配置人物生成的相关参数。
 
@@ -140,7 +140,9 @@ Camera Manager 管理并控制着相机相关的内容，您可以在这里配�
 | Largest，Smallest，X，Y | 规定初始化生成模型的区域（绿色矩形辅助线）                   |
 | Outter Bound Radius     | 人物模型回收边界，**请设置大一些，务必使此边界不与 Grid 相交**，否则可能出现Editor 卡死，这个问题会在后续工作中修复 |
 
+## AbstractPedestrianModelProvider
 
+实现此类以能为 Pedestrians Manager 提供行人模型（将其拖拽到 Main Controller 的 Pedestrian Model Provider 属性槽中，默认为 LocalFilePedestrianModelProvider）。
 
 ## CalibrateTool 
 

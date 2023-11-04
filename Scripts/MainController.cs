@@ -47,7 +47,7 @@ namespace WildPerception {
         #endregion
 
         [HideInInspector] public CameraManager cameraManager;
-	    [FormerlySerializedAs("pedestrainsManager")] [FormerlySerializedAs("modelManager")] [HideInInspector] public PedestriansManager pedestriansManager;
+	    public PedestriansManager pedestriansManager;
 	    [HideInInspector] public CalibrateTool calibrateTool;
 	
 	    //[HideInInspector] public string Image_subsets;

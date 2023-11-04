@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace WildPerception
 {
@@ -11,8 +10,12 @@ namespace WildPerception
     {
         [SerializeField] RuntimeAnimatorController defaultAnimator;
 
-        [FormerlySerializedAs("pedestrainModelProvider")] [FormerlySerializedAs("modelProvider")] [HideInInspector] public AbstractPedestrianModelProvider pedestrianModelProvider;
+        [SerializeField] private BasePedestrianBehaviour PedestrianBehaviour;
+        
+        [HideInInspector] public AbstractPedestrianModelProvider pedestrianModelProvider;
 
+        //public BasePedestrianBehaviourParameters PedestrianBehaviourParameters;
+        
         /// <summary>
         /// The target num of models in scene 
         /// </summary>
@@ -36,7 +39,7 @@ namespace WildPerception
         //keep track of the each person
         [HideInInspector] public List<PersonBound> bounds_list = new List<PersonBound>(25);
 
-        [HideInInspector] public List<int> PID_List = new List<int>(25);
+        [HideInInspector] public List<int> PID_List = new List<int>(128);
         //ArrayList humanList = new ArrayList();  //list of Index of human, starts from zero
 
 
@@ -164,7 +167,7 @@ namespace WildPerception
             var nav = human.GetOrAddComponent<NavMeshAgent>();
             var bound = human.GetOrAddComponent<PersonBound>();
             bound.gridOriginPos = mainController.GridOrigin_OpenCV.transform.position;
-            var pc = human.GetOrAddComponent<PedestrianController>();
+            var pc = human.GetOrAddComponent<GoRandomBasePedestrianBehaviour>();
             pc.pedestriansManager = this;
             nav.speed = walkingSpeed;
             bounds_list.Add(bound);
@@ -175,6 +178,21 @@ namespace WildPerception
             }
 
             bound.PID = PID;
+        }
+        
+        // Call this method with the type of behavior you want to add
+        public void AddBehavior<T>() where T : BasePedestrianBehaviour
+        {
+            // First, remove all existing behaviors that are mutually exclusive
+            var existingBehaviors = GetComponents<BasePedestrianBehaviour>();
+            foreach (var behavior in existingBehaviors)
+            {
+                if (behavior is T) return; // Behavior already added
+                Destroy(behavior);
+            }
+
+            // Add the new behavior
+            gameObject.AddComponent<T>();
         }
 
 

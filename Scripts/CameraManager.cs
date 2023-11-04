@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -24,14 +25,16 @@ namespace WildPerception {
 	    [SerializeField] float hPerLevel = 1f;
 	    [SerializeField] float majorAxis = 3f;
 	    [SerializeField] float minorAxis = 2f;
-	
+
+	    private bool haveFinished;
 	
 	    [Tooltip("Set up this if you are setting the cameras in the scene by hand")]
 	    [HideInInspector] public Transform handPlacedCameraParent;
+
 	    [Space(12)]
-	
 	    [Header("ExportFrames")]
 	    [Tooltip("Camera will be generated around the center, and these camera would look at this posistion")]
+	    public int totalwantedFramesCount = 200;
 	    [HideInInspector] public Transform center;
 	    public const int RESOLUTION_WIDTH = 1920;
 	    public const int RESOLUTION_HEIGHT = 1080;
@@ -47,9 +50,21 @@ namespace WildPerception {
 	    [SerializeField] GameObject CameraPrefab;
 	
 	    int validFrameIndex;
-	
+
+	    public void OnFinishGenerating(int frameIndex)
+	    {
+		    if (!haveFinished)
+		    {
+			    haveFinished = true;
+			    UtilExtension.QuitWithLog($"[{nameof(CameraManager)}] Finished {frameIndex} frames"); // Call the method with frameIndex
+			    //StartCoroutine(DelayQuit(frameIndex, 5f)); // Coroutine with parameters
+		    }
+	    }
+	    
+
 	    public UnityAction<int> ExportThisFrame;
 	    public UnityAction EndExport;
+	    
 	    int perceptionStartAtFrame;
 	
 	    public void PlaceCamera(MainController controller)
@@ -77,7 +92,7 @@ namespace WildPerception {
 	                    {
 		                    var childCamera = handPlacedCameraParent.GetChild(i);
 		                    if (!childCamera.gameObject.activeSelf) continue;
-		                    childCamera.GetComponent<MatchingsExporter>().SetMatchingsExporter(i + 1,controller);
+		                    childCamera.GetComponent<MatchingsExporter>().SetMatchingsExporter(i + 1,totalwantedFramesCount ,controller);
 		                    cams.Add(handPlacedCameraParent.GetChild(i).GetComponent<Camera>());
 	                    }
 	                }
@@ -119,8 +134,10 @@ namespace WildPerception {
                 var Obj = Instantiate(CameraPrefab, lookatTransform.position + pos, Quaternion.identity);
                 cams.Add(Obj.GetComponent<Camera>());
                 //Obj.GetComponent<Camera>().targetDisplay = i;
-                Obj.GetOrAddComponent<MatchingsExporter>().SetMatchingsExporter(cams.Count, controller);
-                Obj.name = "Camera" + (Obj.GetOrAddComponent<MatchingsExporter>().cameraIndex).ToString();
+                var exporter = Obj.GetOrAddComponent<MatchingsExporter>();
+                exporter.EndExportEvent.AddListener(OnFinishGenerating);
+                exporter.SetMatchingsExporter(cams.Count, totalwantedFramesCount, controller);
+                Obj.name = "Camera" + (exporter.cameraIndex).ToString();
                 // Obj.transform.LookAt(nert);
                 Obj.transform.LookAt(lookatTransform.position);
             }
