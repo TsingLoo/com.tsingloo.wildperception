@@ -2,36 +2,38 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace WildPerception {	public static class UtilExtension
+namespace WildPerception
+{
+    public static class UtilExtension
     {
         public static void QuitWithLogError(string msg)
         {
             Debug.LogError(msg);
+
 #if UNITY_EDITOR
-            EditorApplication.ExitPlaymode();
+            bool userSelection = EditorUtility.DisplayDialog(
+                "Error",
+                msg + "\n\nThe application will now exit play mode.",
+                "Exit Play Mode"
+            );
+            
+            if (userSelection)
+            {
+                EditorApplication.ExitPlaymode();
+            }
 #else
-	        Application.Quit();
+    Application.Quit();
 #endif
         }
 
         public static TValue TryGetValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
         {
-            /// <summary>
-            /// 扩展字典类中的TryGetValue方法
-            /// 可以直接通过给出key返回value,而不是像原方法一样返回bool值
-            /// </summary>
-            /// <typeparam name="TKey"></typeparam>
-            /// <typeparam name="TValue"></typeparam>
-            /// <param name="dict"></param>
-            /// <param name="key"></param>
-            /// <returns></returns>
-	
             TValue value;
             dict.TryGetValue(key, out value);
-	
+
             return value;
         }
-	
+
         public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
         {
             T component = obj.GetComponent<T>();
@@ -39,11 +41,11 @@ namespace WildPerception {	public static class UtilExtension
             {
                 return obj.AddComponent<T>();
             }
-	
+
             return component;
         }
-	
-        public static void SafeSetActive(UnityEngine.Object obj, bool active) 
+
+        public static void SafeSetActive(UnityEngine.Object obj, bool active)
         {
             if (obj != null)
             {

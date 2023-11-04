@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 911568766210223016}
   - component: {fileID: 2201622316288865460}
+  - component: {fileID: 830560474794298802}
   - component: {fileID: 911568766210223018}
   - component: {fileID: 911568766210223017}
   - component: {fileID: 4269936379426897461}
@@ -33,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2201622316288865460
 MonoBehaviour:
@@ -47,16 +48,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330bb7f24989fa64cb22ab97b0fe64a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MultiviewX_Folder: D:\PycharmProjects\MultiviewX_FYP
-  humanModels_Folder: com.tsingloo.wildperception\Resources\Models
   GridOrigin_OpenCV: {fileID: 0}
   Center_HumanSpawn_CameraLookAt: {fileID: 0}
   HandPlacedCameraParent: {fileID: 0}
+  MultiviewX_Perception_Folder: D:/PycharmProjects/MultiviewX_Perception
+  pedestrianModelProvider: {fileID: 830560474794298802}
   cameraManager: {fileID: 0}
-  peopleManager: {fileID: 0}
+  pedestriansManager: {fileID: 0}
   calibrateTool: {fileID: 0}
   matchings: 
   validate: 
+--- !u!114 &830560474794298802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911568766210222997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb34a68e3c74b7187b2d98e1f3f8822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model_PATH: D:/UnityProjects/com.tsingloo.wildperception/Resources/Models
 --- !u!114 &911568766210223018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,14 +111,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAnimator: {fileID: 9100000, guid: b410a9f068a479b419be870a718cc555, type: 2}
-  model_PATH: Prefabs/Models/
+  pedestrianModelProvider: {fileID: 0}
   add_human_count: 3
   preset_humans: 20
   largestX: 6.65
   smallestX: -5.67
   largestZ: 5.77
   smallestZ: -4.76
-  outterBoundRadius: 25
+  outterBoundRadius: 15
   walkingSpeed: 1
   bounds_list: []
   PID_List: 
@@ -125,7 +139,7 @@ MonoBehaviour:
   camerasToCalibrate: []
   targetParentFolder: ../calib/
   chessboardGenerateCenter: {fileID: 0}
-  Scaling: 1
+  Scaling: 0.5
   updateChessboardInterval: 0.2
   chessboardCount: 50
   SQUARE_SIZE: 0.14

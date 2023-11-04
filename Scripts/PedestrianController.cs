@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+
 namespace WildPerception 
 {
-    public class PersonController : MonoBehaviour
+    public class PedestrianController : MonoBehaviour
     {
-        public PeopleManager peopleManager;
+        public PedestriansManager pedestriansManager;
         NavMeshAgent nav;
         private Animator animator;
 
@@ -76,8 +77,8 @@ namespace WildPerception
         {
 
             float y = transform.position.y;
-            float x = Random.Range(peopleManager.smallestX, peopleManager.largestX);
-            float z = Random.Range(peopleManager.smallestZ, peopleManager.largestZ);
+            float x = Random.Range(pedestriansManager.smallestX, pedestriansManager.largestX);
+            float z = Random.Range(pedestriansManager.smallestZ, pedestriansManager.largestZ);
 
             nav.destination = new Vector3(x, y, z) + transform.position;
             nav.isStopped = false;

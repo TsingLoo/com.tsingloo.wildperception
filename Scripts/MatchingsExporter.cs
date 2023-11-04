@@ -17,7 +17,7 @@ namespace WildPerception {
 	    Camera cam;
 	    PerceptionCamera pCam;
 		CameraManager cameraManager;
-		PeopleManager peopleManager;
+		PedestriansManager pedestriansManager;
 	
 	    int frameBias = 0;
 	    int frameIndex = 0;
@@ -64,7 +64,7 @@ namespace WildPerception {
 	        this.cameraIndex = cameraIndex;
 	        //Obj.name = "Camera" + (Obj.GetOrAddComponent<MatchingsExporter>().cameraIndex).ToString();
 	        this.filePath = controller.matchings;
-			peopleManager = controller.peopleManager;
+			pedestriansManager = controller.pedestriansManager;
 	    }
 	
 	    void ExportThisFrameHandler()
@@ -74,7 +74,7 @@ namespace WildPerception {
 	            Debug.Log($"[{nameof(MatchingsExporter)}][IO]{gameObject.name} Export this frame : " + frameIndex.ToString());	
 	            //Debug.Log("[IO]Export matchings for this frame : " + (Time.frameCount - CameraManager.Instance.BeginFrameCount).ToString());
 	
-	                foreach (var bound in peopleManager.bounds_list)
+	                foreach (var bound in pedestriansManager.bounds_list)
 	                {
 	                    bound.UpdateDataTuple();
 	                    WriteFileByLine((frameIndex).ToString() + " " + bound.GetDataTuple_2D(cam), sw_2D);

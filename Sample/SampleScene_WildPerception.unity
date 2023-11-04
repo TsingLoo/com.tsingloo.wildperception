@@ -804,15 +804,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 830560474794298802, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      propertyPath: model_PATH
+      value: D:/UnityProjects/com.tsingloo.wildperception/Resources/Models
+      objectReference: {fileID: 0}
     - target: {fileID: 911568766210222997, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: m_Name
       value: SceneController
-      objectReference: {fileID: 0}
-    - target: {fileID: 911568766210222997, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 911568766210223016, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
@@ -869,26 +869,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 911568766210223017, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: outterBoundRadius
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 911568766210223018, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: cameraPlaceType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: GridOrigin_OpenCV
       value: 
       objectReference: {fileID: 1674453026}
-    - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: humanModels_Folder
-      value: com.tsingloo.wildperception\Resources\Models
-      objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: HandPlacedCameraParent
@@ -899,11 +884,6 @@ PrefabInstance:
       propertyPath: Center_HumanSpawn_CameraLookAt
       value: 
       objectReference: {fileID: 389506193}
-    - target: {fileID: 4269936379426897461, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: Scaling
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4269936379426897461, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: gridOrigin

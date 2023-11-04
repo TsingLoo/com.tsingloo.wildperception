@@ -4,20 +4,27 @@ using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.GroundTruth.Consumers;
 using UnityEngine.Perception.Settings;
+using UnityEngine.Serialization;
 
 namespace WildPerception {	
-	[RequireComponent(typeof(PeopleManager))]
+	[RequireComponent(typeof(PedestriansManager))]
 	[RequireComponent(typeof(CalibrateTool))]
 	public class MainController : SingletonForMonobehaviour<MainController>
 	{
     #region Inspector
-	
-	    public string MultiviewX_Perception_Folder = "D:\\PycharmProjects\\MultiviewX_Perception";
-	    public string humanModels_Folder = "com.tsingloo.wildperception\\Resources\\Models";
-	
+    
 	    public GameObject GridOrigin_OpenCV;
 	    public GameObject Center_HumanSpawn_CameraLookAt;
 	    public GameObject HandPlacedCameraParent;
+
+	    [Header("Python Code Path")]
+	    public string MultiviewX_Perception_Folder = "D:\\PycharmProjects\\MultiviewX_Perception";
+	    //public string humanModels_Folder = "com.tsingloo.wildperception\\Resources\\Models";
+
+	    
+	    [Header("PedestrianModelProvider")]
+	    [SerializeField] private AbstractPedestrianModelProvider pedestrianModelProvider;
+	    
 	    public void InitScene() 
 	    {
 	        InitKeyObj(nameof(GridOrigin_OpenCV));
@@ -40,7 +47,7 @@ namespace WildPerception {
         #endregion
 
         [HideInInspector] public CameraManager cameraManager;
-	    [HideInInspector] public PeopleManager peopleManager;
+	    [FormerlySerializedAs("pedestrainsManager")] [FormerlySerializedAs("modelManager")] [HideInInspector] public PedestriansManager pedestriansManager;
 	    [HideInInspector] public CalibrateTool calibrateTool;
 	
 	    //[HideInInspector] public string Image_subsets;
@@ -49,6 +56,11 @@ namespace WildPerception {
 	
 	    private void Awake()
 	    {
+		    if (!File.Exists(Path.Combine(MultiviewX_Perception_Folder, "run_all.py")))
+		    {
+				UtilExtension.QuitWithLogError($"Wrong {nameof(MultiviewX_Perception_Folder)}");
+		    }
+		    
 	        AssignTransform();
 	        matchings = Path.Join(MultiviewX_Perception_Folder, nameof(matchings));
 	        validate = Path.Join(MultiviewX_Perception_Folder, nameof(validate));
@@ -58,7 +70,7 @@ namespace WildPerception {
 	    public void AssignTransform()
 	    {
 	        cameraManager = GetComponent<CameraManager>();
-	        peopleManager = GetComponent<PeopleManager>();
+	        pedestriansManager = GetComponent<PedestriansManager>();
 	        calibrateTool = GetComponent<CalibrateTool>();
 	
 	        cameraManager.handPlacedCameraParent = HandPlacedCameraParent.transform;
@@ -94,7 +106,7 @@ namespace WildPerception {
 	        calibrateTool.targetParentFolder = MultiviewX_Perception_Folder;
 	        calibrateTool.gridOrigin = GridOrigin_OpenCV.transform;
 
-			peopleManager.model_PATH = humanModels_Folder;
+	        pedestriansManager.pedestrianModelProvider = pedestrianModelProvider;
 	
 	        var p = PerceptionSettings.GetOutputBasePath();
 	        if (!Directory.Exists(p))
