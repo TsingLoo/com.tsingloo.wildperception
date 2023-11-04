@@ -10,8 +10,6 @@ namespace WildPerception
     {
         [SerializeField] RuntimeAnimatorController defaultAnimator;
 
-        [SerializeField] private BasePedestrianBehaviour PedestrianBehaviour;
-        
         [HideInInspector] public AbstractPedestrianModelProvider pedestrianModelProvider;
 
         //public BasePedestrianBehaviourParameters PedestrianBehaviourParameters;

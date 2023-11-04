@@ -804,11 +804,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 830560474794298802, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: model_PATH
-      value: D:/UnityProjects/com.tsingloo.wildperception/Resources/Models
-      objectReference: {fileID: 0}
     - target: {fileID: 911568766210222997, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: m_Name
@@ -868,11 +863,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 911568766210223018, guid: 0919d83cb98a4ae4a8619660acd7e724,
-        type: 3}
-      propertyPath: totalwantedFramesCount
-      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}

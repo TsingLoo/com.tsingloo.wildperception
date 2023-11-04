@@ -92,6 +92,7 @@ MonoBehaviour:
   majorAxis: 3
   minorAxis: 2
   handPlacedCameraParent: {fileID: 0}
+  totalwantedFramesCount: 25
   center: {fileID: 0}
   cams: []
   gridOrigin: {fileID: 0}
@@ -111,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAnimator: {fileID: 9100000, guid: b410a9f068a479b419be870a718cc555, type: 2}
+  PedestrianBehaviour: {fileID: 0}
   pedestrianModelProvider: {fileID: 0}
   add_human_count: 3
   preset_humans: 20
