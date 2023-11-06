@@ -4,12 +4,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 namespace WildPerception
 {
     public class PedestriansManager : SingletonForMonobehaviour<PedestriansManager>
     {
-        [SerializeField] RuntimeAnimatorController defaultAnimator;
-
         [HideInInspector] public AbstractPedestrianModelProvider pedestrianModelProvider;
 
         //public BasePedestrianBehaviourParameters PedestrianBehaviourParameters;
@@ -17,22 +16,23 @@ namespace WildPerception
         /// <summary>
         /// The target num of models in scene 
         /// </summary>
-        public int add_human_count;
+        public int TotalHumanCount;
 
-        public int preset_humans;
-
-
+        [Header("Respawn Area Settings")]
         //Change the Respawn area size 
         public float largestX;
         public float smallestX;
         public float largestZ;
         public float smallestZ;
 
+        [Header("Outter Bound Settings")]
         //Change the outter bound area
         public float outterBoundRadius = 25;
 
-        public float walkingSpeed;
-
+        [Header("NavMeshAgent Settings")]
+        [SerializeField] RuntimeAnimatorController defaultAnimator;
+        [SerializeField] float walkingSpeed;
+        [SerializeField] float baseOffset;
 
         //keep track of the each person
         [HideInInspector] public List<PersonBound> bounds_list = new List<PersonBound>(25);
@@ -40,11 +40,13 @@ namespace WildPerception
         [HideInInspector] public List<int> PID_List = new List<int>(128);
         //ArrayList humanList = new ArrayList();  //list of Index of human, starts from zero
 
-
-        [Header("Gizmos")] bool popWarning = true;
+        [Space(12)]
+        [Header("Gizmos")]
+        [SerializeField] bool popWarning = true;
         [SerializeField] bool DrawRespawnArea = true;
         [SerializeField] bool DrawOutterBound = true;
-
+        
+        
         CameraManager cameraManager;
         CalibrateTool calibrateTool;
         MainController mainController;
@@ -55,7 +57,7 @@ namespace WildPerception
             calibrateTool = GetComponent<CalibrateTool>();
             mainController = GetComponent<MainController>();
 
-            SpawnOriginalHumans(preset_humans);
+            SpawnOriginalHumans(TotalHumanCount);
             StartCoroutine(nameof(CheckInsideCircle));
 
             if (outterBoundRadius < Mathf.Min(calibrateTool.MAP_WIDTH * calibrateTool.Scaling,
@@ -168,6 +170,7 @@ namespace WildPerception
             var pc = human.GetOrAddComponent<GoRandomBasePedestrianBehaviour>();
             pc.pedestriansManager = this;
             nav.speed = walkingSpeed;
+            nav.baseOffset = baseOffset;
             bounds_list.Add(bound);
             int PID = UnityEngine.Random.Range(0, 1000);
             while (PID_List.Contains(PID))

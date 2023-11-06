@@ -16,7 +16,7 @@ namespace WildPerception
                 msg + "\n\nThe application will now exit play mode.",
                 "Exit Play Mode"
             );
-            
+
             if (userSelection)
             {
                 EditorApplication.ExitPlaymode();
@@ -36,17 +36,16 @@ namespace WildPerception
                 msg + "\n\nThe application will now exit play mode.",
                 "Exit Play Mode"
             );
-            
+
             if (userSelection)
             {
-                
                 EditorApplication.ExitPlaymode();
             }
 #else
     Application.Quit();
 #endif
         }
-        
+
         public static TValue TryGetValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
         {
             TValue value;

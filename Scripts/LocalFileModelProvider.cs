@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace WildPerception
@@ -10,7 +9,7 @@ namespace WildPerception
     public class LocalFilePedestrianModelProvider : AbstractPedestrianModelProvider
     {
         List<string> usedHumanModels = new List<string>(); // List to keep track of used human model names
-        
+
         /// <summary>
         /// The selected folder path must exactly contains "Resources/Model", for example: D:/UnityProjects/com.tsingloo.wildperception/Resources/Models
         /// </summary>
@@ -21,7 +20,8 @@ namespace WildPerception
             // Check if the selected path includes "Resources/Models"
             if (!model_PATH.Contains("Resources/Models"))
             {
-                UtilExtension.QuitWithLogError($"[{nameof(LocalFilePedestrianModelProvider)}] The selected path does not include 'Resources/Models'. Please select a valid folder.");
+                UtilExtension.QuitWithLogError(
+                    $"[{nameof(LocalFilePedestrianModelProvider)}] The selected path does not include 'Resources/Models'. Please select a valid folder.");
                 return;
             }
 
@@ -32,16 +32,14 @@ namespace WildPerception
             if (files.Any(
                     file => Path.GetExtension(file) != ".prefab" && Path.GetExtension(file) != ".meta"))
             {
-                UtilExtension.QuitWithLogError($"[{nameof(LocalFilePedestrianModelProvider)}] The selected folder must contain only .prefab files and their respective .meta files.");
+                UtilExtension.QuitWithLogError(
+                    $"[{nameof(LocalFilePedestrianModelProvider)}] The selected folder must contain only .prefab files and their respective .meta files.");
                 return;
             }
         }
 
         public override GameObject GetPedestrianModel()
         {
-            
-            
-            
             string humanModelPath = "";
             bool isDuplicateModel = true;
             //Debug.Log($"[{nameof(PeopleManager)}]Assets/Bundles/Resources/{PATH}");
@@ -50,7 +48,8 @@ namespace WildPerception
 
             if (humanModelFiles == null || humanModelFiles.Length == 0)
             {
-                UtilExtension.QuitWithLogError($"[{nameof(LocalFilePedestrianModelProvider)}] Invalid models folder : {model_PATH}");
+                UtilExtension.QuitWithLogError(
+                    $"[{nameof(LocalFilePedestrianModelProvider)}] Invalid models folder : {model_PATH}");
                 return null;
             }
             else
@@ -83,13 +82,14 @@ namespace WildPerception
                 }
 
                 humanModelPath = humanModelPath.Replace(".prefab", "");
-                Debug.Log(humanModelPath);
+                Debug.Log($"[{nameof(LocalFilePedestrianModelProvider)}] Reading model {humanModelPath}");
                 GameObject humanPrefab = Resources.Load<GameObject>(humanModelPath);
                 usedHumanModels.Add(humanModelPath);
                 if (usedHumanModels.Count >= humanModelFiles.Length)
                 {
                     usedHumanModels.Clear();
                 }
+
                 return humanPrefab;
                 //GameObject humanPrefab = Resources.Load<GameObject>(PATH + Randoms(0, modelCount, preset_humans).ToString());
             }

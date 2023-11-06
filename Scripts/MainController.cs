@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.GroundTruth.Consumers;
 using UnityEngine.Perception.Settings;
-using UnityEngine.Serialization;
 
 namespace WildPerception {	
 	[RequireComponent(typeof(PedestriansManager))]
@@ -47,7 +46,7 @@ namespace WildPerception {
         #endregion
 
         [HideInInspector] public CameraManager cameraManager;
-	    public PedestriansManager pedestriansManager;
+	    [HideInInspector] public PedestriansManager pedestriansManager;
 	    [HideInInspector] public CalibrateTool calibrateTool;
 	
 	    //[HideInInspector] public string Image_subsets;
@@ -88,7 +87,7 @@ namespace WildPerception {
 	        if (dir.Exists)
 	        {
 	            dir.Delete(true);
-	            Debug.Log("[IO]" + foldername + " have been deleted");
+	            Debug.Log($"[IO] {foldername} have been deleted");
 	        }
 	    }
 	
@@ -98,7 +97,7 @@ namespace WildPerception {
 	        DeleteFolder(matchings);
 	
 	        Directory.CreateDirectory(matchings);
-	        Debug.Log($"[{nameof(MainController)}][IO]Folder " + matchings + " created.");
+	        Debug.Log($"[{nameof(MainController)}][IO] Folder " + matchings + " created.");
 	        //DeleteFolder(Image_subsets);
 	        cameraManager.PlaceCamera(this);
 	

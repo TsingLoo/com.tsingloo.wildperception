@@ -20,7 +20,7 @@ using UnityEngine;
 	
 	    DynSpownCollider dsc;
 	    //CameraManager cameraManager;
-
+	    private CalibrateTool calibrateTool;
 	
 	
 	    private void Awake()
@@ -40,6 +40,7 @@ using UnityEngine;
 	        //GetDataTuple_2D();
 	        //GetDataTuple_3D();
 	        //GenerateCameraX_3D();
+	        calibrateTool = CalibrateTool.Instance;
 	    }
 	
 	    public void UpdateDataTuple()
@@ -58,11 +59,11 @@ using UnityEngine;
 	        AddPropertyToTuple(PID.ToString(),ref tuple_2D);
 	        for (int i = 0; i < points.Length; i++)
 	        {
-	            AddPropertyToTuple((points2D[i].x * (CameraManager.RESOLUTION_WIDTH)).ToString(), ref tuple_2D);
-	            AddPropertyToTuple(((1 - points2D[i].y) * (CameraManager.RESOLUTION_HEIGHT)).ToString(), ref tuple_2D);
+	            AddPropertyToTuple((points2D[i].x * (calibrateTool.IMAGE_WIDTH)).ToString(), ref tuple_2D);
+	            AddPropertyToTuple(((1 - points2D[i].y) * (calibrateTool.IMAGE_HEIGHT)).ToString(), ref tuple_2D);
 	        }
-	        AddPropertyToTuple(((cam.WorldToViewportPoint(gameObject.transform.position).x * CameraManager.RESOLUTION_WIDTH)).ToString(), ref tuple_2D);
-	        AddPropertyToTuple(((1 - cam.WorldToViewportPoint(gameObject.transform.position).y) * CameraManager.RESOLUTION_HEIGHT).ToString(), ref tuple_2D);
+	        AddPropertyToTuple(((cam.WorldToViewportPoint(gameObject.transform.position).x * calibrateTool.IMAGE_WIDTH)).ToString(), ref tuple_2D);
+	        AddPropertyToTuple(((1 - cam.WorldToViewportPoint(gameObject.transform.position).y) * calibrateTool.IMAGE_HEIGHT).ToString(), ref tuple_2D);
 	        return tuple_2D;
 	    }
 	
@@ -81,7 +82,7 @@ using UnityEngine;
 	            AddPropertyToTuple(((points2D[i].y)).ToString(), ref tuple_2D);
 	        }
 	        AddPropertyToTuple(((cam.WorldToScreenPoint(gameObject.transform.position).x)).ToString(), ref tuple_2D);
-	        AddPropertyToTuple(((CameraManager.RESOLUTION_HEIGHT - cam.WorldToScreenPoint(gameObject.transform.position).y) ).ToString(), ref tuple_2D);
+	        AddPropertyToTuple(((calibrateTool.IMAGE_HEIGHT - cam.WorldToScreenPoint(gameObject.transform.position).y) ).ToString(), ref tuple_2D);
 	        return tuple_2D;
 	    }
 	
@@ -125,12 +126,12 @@ using UnityEngine;
 	    static Vector3[] GetBoxColliderVertexPositions(BoxCollider boxcollider)
 	    {
 	        var vertices = new Vector3[8];
-	        //����4����
+
 	        vertices[0] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x, -boxcollider.size.y, boxcollider.size.z) * 0.5f);
 	        vertices[1] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x, -boxcollider.size.y, boxcollider.size.z) * 0.5f);
 	        vertices[2] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x, -boxcollider.size.y, -boxcollider.size.z) * 0.5f);
 	        vertices[3] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x, -boxcollider.size.y, -boxcollider.size.z) * 0.5f);
-	        //����4����
+
 	        vertices[4] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x, boxcollider.size.y, boxcollider.size.z) * 0.5f);
 	        vertices[5] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x, boxcollider.size.y, boxcollider.size.z) * 0.5f);
 	        vertices[6] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x, boxcollider.size.y, -boxcollider.size.z) * 0.5f);
@@ -150,7 +151,6 @@ using UnityEngine;
 	            //Debug.Log(points2D[i]);
 	        }
 	        return points2D;
-	
 	    }
 	}
 }

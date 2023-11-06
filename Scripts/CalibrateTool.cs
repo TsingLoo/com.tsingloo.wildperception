@@ -133,9 +133,9 @@ namespace WildPerception
         [SerializeField] float tRandomOffset = 5f;
         [SerializeField] float rRandomOffset = 120;
 	
+        [Space(12)]
         [Header("Gizmos")]
-        bool popWarning = true;
-	
+        [SerializeField] bool popWarning = true;
         [SerializeField] bool drawChessboard = true;
         [SerializeField] bool drawGrid = true;
         [SerializeField] bool drawScaling = true;
@@ -177,7 +177,7 @@ namespace WildPerception
             WriteDatasetParametersPy(); 
             //WriteGridOrigin();
             targetParentFolder = Path.Combine(targetParentFolder,"calib");
-            Debug.Log("[CalibrateTool][IO]Calibrate saved in " + targetParentFolder);
+            Debug.Log("[CalibrateTool][IO] Calibrate saved in " + targetParentFolder);
             ResetFolder(targetParentFolder);
 	
             pointsLists2d = new List<List<Vector2[]>>(camerasToCalibrate.Count);
@@ -222,7 +222,7 @@ namespace WildPerception
 		        
                 if (cam.pixelHeight != IMAGE_HEIGHT || cam.pixelWidth != IMAGE_WIDTH)
                 {
-                    UtilExtension.QuitWithLogError($"[CalibrateTool]Config Image size({IMAGE_WIDTH},{IMAGE_HEIGHT}) is not the same with Game View of Camera {cam.name}, target display {cam.targetDisplay}, size({cam.pixelWidth},{cam.pixelHeight})");
+                    UtilExtension.QuitWithLogError($"[CalibrateTool] Config Image size({IMAGE_WIDTH},{IMAGE_HEIGHT}) is not the same with Game View of Camera {cam.name}, target display {cam.targetDisplay}, size({cam.pixelWidth},{cam.pixelHeight})");
                 }      
 		        
 
@@ -260,7 +260,7 @@ namespace WildPerception
                 }
                 UpdateChessboard();
             }
-            Debug.Log("[CalibrateTool]UpdateChessboard STOP");
+            Debug.Log("[CalibrateTool] UpdateChessboard STOP");
             //hasWrittenCalib = true;
             WriteCalib();
         }
@@ -294,7 +294,7 @@ namespace WildPerception
                 // Note the order of codes above.  Different order shows different outcome.
                 if (boardIndex >= chessboardCount)
                 {
-                    Debug.Log("[CalibrateTool]UpdateChessboard STOP");
+                    Debug.Log("[CalibrateTool] UpdateChessboard STOP");
                     //hasWrittenCalib = true;
                     WriteCalib();
                     break;
@@ -423,7 +423,7 @@ namespace WildPerception
             pysw.WriteLine(nameof(Scaling) + " = " + Scaling.ToString()); 
             pysw.WriteLine(@"NUM_FRAMES = 0");
             pysw.WriteLine(@"DATASET_NAME = ''");
-            pysw.WriteLine(@"#If you are using perception packgae: this should NOT be 'perception', output path of perception instead");
+            pysw.WriteLine(@"#If you are using perception package: this should NOT be 'perception', output path of perception instead");
             if (!PERCEPTION_PATH.Equals(@"f'perception'"))
             { 
                 PERCEPTION_PATH = $"'{PERCEPTION_PATH}'";
@@ -519,7 +519,7 @@ namespace WildPerception
         async void WriteCalib() 
         {
             //hasWrittenCalib= true;
-            Debug.Log("[CalibrateTool]Begin to write calib");
+            Debug.Log("[CalibrateTool] Begin to write calibration");
 	
             //针对每个相机
             for (int i = 0; i < camerasToCalibrate.Count; i++)
@@ -559,7 +559,7 @@ namespace WildPerception
                     });
                 }
             }
-            Debug.Log("[CalibrateTool]Calib Finished");
+            Debug.Log($"[{nameof(CalibrateTool)}] Calibration Finished");
         }
 	
         void WriteToFile(string filePath, string fileName, string data)
@@ -579,7 +579,7 @@ namespace WildPerception
             if (dir.Exists)
             {
                 dir.Delete(true);
-                Debug.Log("[CalibrateTool][IO]" + foldername + " have been reset");
+                Debug.Log($"$[CalibrateTool][IO] {foldername} have been reset");
             }
 	
         }
@@ -697,7 +697,7 @@ namespace WildPerception
             {
                 if (!EditorApplication.isPlaying)
                 {
-                    Debug.LogWarning($"[{nameof(CalibrateTool)}]Go to SceneController => {nameof(MainController)} to init scene");
+                    Debug.LogWarning($"[{nameof(CalibrateTool)}] Go to SceneController => {nameof(MainController)} to init scene");
                     popWarning = false;
                 }
             }

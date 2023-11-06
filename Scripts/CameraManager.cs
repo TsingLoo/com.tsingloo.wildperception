@@ -4,19 +4,30 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Perception.GroundTruth;
+using UnityEngine.Serialization;
 
 namespace WildPerception {	
 	public class CameraManager : SingletonForMonobehaviour<CameraManager>
 	{
-	    public int BeginFrameCount = 150;
-	
-	    public enum eCameraPlaceType
+		[FormerlySerializedAs("totalwantedFramesCount")]
+		[Header("Export Frames Settings")]
+		[Space(8)]
+		public int TotalWantedFramesCount = 200;
+		[Space(8)]
+		//[Tooltip("Camera will be generated around the center, and these camera would look at this posistion")]
+		public int FirstDroppedFrameCount = 150;
+
+		[HideInInspector] public List<Camera> cams;
+		[HideInInspector] public Transform gridOrigin;
+		[HideInInspector] public Transform center;
+		public enum eCameraPlaceType
 	    {
 	        Ellipse_Auto,
 	        ByHand
 	    }
-	
-	    public eCameraPlaceType cameraPlaceType;
+		[Header("Camera Settings")]
+		[SerializeField] GameObject CameraPrefab;
+		public eCameraPlaceType cameraPlaceType;
 	
 	    [Header("Ellipse_Auto Settings")]
 	    [SerializeField] int level = 2;
@@ -27,36 +38,29 @@ namespace WildPerception {
 	    [SerializeField] float minorAxis = 2f;
 
 	    private bool haveFinished;
-	
-	    [Tooltip("Set up this if you are setting the cameras in the scene by hand")]
+	    
+	    //[Tooltip("Set up this if you are setting the cameras in the scene by hand")]
 	    [HideInInspector] public Transform handPlacedCameraParent;
 
 	    [Space(12)]
-	    [Header("ExportFrames")]
-	    [Tooltip("Camera will be generated around the center, and these camera would look at this posistion")]
-	    public int totalwantedFramesCount = 200;
-	    [HideInInspector] public Transform center;
-	    public const int RESOLUTION_WIDTH = 1920;
-	    public const int RESOLUTION_HEIGHT = 1080;
-	    [HideInInspector] public List<Camera> cams;
-	    [HideInInspector] public Transform gridOrigin;
-	
+
 	    [Header("Gizmos")]
-	    bool popWarning = true;
+	    [SerializeField] bool popWarning = true;
 	    [SerializeField] bool drawEllipseGizmos = true;
-	
-	
-	
-	    [SerializeField] GameObject CameraPrefab;
-	
+	    
 	    int validFrameIndex;
 
-	    public void OnFinishGenerating(int frameIndex)
+	    public void OnFinishGenerating(bool isAutoEnd, int frameIndex)
 	    {
 		    if (!haveFinished)
 		    {
 			    haveFinished = true;
-			    UtilExtension.QuitWithLog($"[{nameof(CameraManager)}] Finished {frameIndex} frames"); // Call the method with frameIndex
+			    if (isAutoEnd)
+			    {
+				    frameIndex++;
+			    }
+			    
+			    UtilExtension.QuitWithLog($"[{nameof(CameraManager)}] Finished {frameIndex} frames");
 			    //StartCoroutine(DelayQuit(frameIndex, 5f)); // Coroutine with parameters
 		    }
 	    }
@@ -84,7 +88,7 @@ namespace WildPerception {
 	            case (int)eCameraPlaceType.ByHand:
 	                if (handPlacedCameraParent == null || handPlacedCameraParent.childCount == 0)
 	                {
-						UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}]You are setting cams in scene by hand. Please check {nameof(handPlacedCameraParent)}");
+						UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}] You are setting cams in scene by hand. Please check {nameof(handPlacedCameraParent)}");
 	                }
 	                else
 	                {
@@ -92,14 +96,14 @@ namespace WildPerception {
 	                    {
 		                    var childCamera = handPlacedCameraParent.GetChild(i);
 		                    if (!childCamera.gameObject.activeSelf) continue;
-		                    childCamera.GetComponent<MatchingsExporter>().SetMatchingsExporter(i + 1,totalwantedFramesCount ,controller);
+		                    childCamera.GetComponent<MatchingsExporter>().SetMatchingsExporter(i + 1,TotalWantedFramesCount ,controller);
 		                    cams.Add(handPlacedCameraParent.GetChild(i).GetComponent<Camera>());
 	                    }
 	                }
 	                break;
 	
 	            default:
-					UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}]NO TARGET CAMERA PLACEMENT CASE");
+					UtilExtension.QuitWithLogError($"[{nameof(CameraManager)}] NO TARGET CAMERA PLACEMENT CASE");
 	                break;
 	        }
 	    }
@@ -108,7 +112,7 @@ namespace WildPerception {
 	    private void Awake()
 	    {
 	        //BeginFrameCount = PlayerPrefs.GetInt(SaveDataManager.START_FRAME) + Time.frameCount;
-	        perceptionStartAtFrame = BeginFrameCount;
+	        perceptionStartAtFrame = FirstDroppedFrameCount;
 	        CameraPrefab.GetComponent<PerceptionCamera>().firstCaptureFrame = perceptionStartAtFrame;
 	    }
 
@@ -136,7 +140,7 @@ namespace WildPerception {
                 //Obj.GetComponent<Camera>().targetDisplay = i;
                 var exporter = Obj.GetOrAddComponent<MatchingsExporter>();
                 exporter.EndExportEvent.AddListener(OnFinishGenerating);
-                exporter.SetMatchingsExporter(cams.Count, totalwantedFramesCount, controller);
+                exporter.SetMatchingsExporter(cams.Count, TotalWantedFramesCount, controller);
                 Obj.name = "Camera" + (exporter.cameraIndex).ToString();
                 // Obj.transform.LookAt(nert);
                 Obj.transform.LookAt(lookatTransform.position);
@@ -176,7 +180,7 @@ namespace WildPerception {
 	            {
 	                if (!EditorApplication.isPlaying)
 	                {
-	                    Debug.LogWarning($"[{nameof(CameraManager)}]Go to SceneController => {nameof(MainController)} to init scene");
+	                    Debug.LogWarning($"[{nameof(CameraManager)}] Go to SceneController => {nameof(MainController)} to init scene");
 	                    popWarning = false;
 	                }
 	            }

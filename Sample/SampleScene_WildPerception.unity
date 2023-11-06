@@ -864,6 +864,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 911568766210223017, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      propertyPath: TotalHumanCount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 911568766210223018, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      propertyPath: numsPerLevel
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: GridOrigin_OpenCV
@@ -884,6 +894,16 @@ PrefabInstance:
       propertyPath: gridOrigin
       value: 
       objectReference: {fileID: 1674453027}
+    - target: {fileID: 4269936379426897461, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      propertyPath: IMAGE_WIDTH
+      value: 1280
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269936379426897461, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      propertyPath: IMAGE_HEIGHT
+      value: 720
+      objectReference: {fileID: 0}
     - target: {fileID: 4269936379426897461, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
       propertyPath: chessboardGenerateCenter
