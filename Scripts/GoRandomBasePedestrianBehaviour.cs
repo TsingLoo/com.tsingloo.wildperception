@@ -78,7 +78,7 @@ namespace WildPerception
             float x = Random.Range(pedestriansManager.smallestX, pedestriansManager.largestX);
             float z = Random.Range(pedestriansManager.smallestZ, pedestriansManager.largestZ);
 
-            nav.destination = new Vector3(x, y, z) + transform.position;
+            nav.destination = new Vector3(x, y, z);
             nav.isStopped = false;
         }
 

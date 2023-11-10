@@ -17,7 +17,7 @@ namespace WildPerception {
 	    public GameObject HandPlacedCameraParent;
 
 	    [Header("Python Code Path")]
-	    public string MultiviewX_Perception_Folder = "D:\\PycharmProjects\\MultiviewX_Perception";
+	    public string MultiviewX_Perception_Folder = "../MultiviewX_Perception";
 	    //public string humanModels_Folder = "com.tsingloo.wildperception\\Resources\\Models";
 
 	    
@@ -55,10 +55,7 @@ namespace WildPerception {
 	
 	    private void Awake()
 	    {
-		    if (!File.Exists(Path.Combine(MultiviewX_Perception_Folder, "run_all.py")))
-		    {
-				UtilExtension.QuitWithLogError($"Wrong {nameof(MultiviewX_Perception_Folder)}");
-		    }
+			if(!UtilExtension.CheckPythonPath(MultiviewX_Perception_Folder)) return;
 		    
 	        AssignTransform();
 	        matchings = Path.Join(MultiviewX_Perception_Folder, nameof(matchings));

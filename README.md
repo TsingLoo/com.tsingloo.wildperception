@@ -1,14 +1,44 @@
 WildPerception 是一个利用 [Unity Perception Package](https://github.com/Unity-Technologies/com.unity.perception) 来生成大规模多视角视频数据集的工具。
 
-其允许用户导入自己的 Humanoid 人物模型，自定义场景，配合 [MultiviewX_Perception](https://github.com/TsingLoo/MultiviewX_Perception) 可以得到符合 Wildtrack 格式的数据集。 
+其允许用户导入自己的 Humanoid 人物模型，或者利用 [SyntheticHumans Package](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans#synthetichumans-package-unity-computer-vision) 以合成人物模型，从而在自定义的场景中模拟行人。配合 [MultiviewX_Perception](https://github.com/TsingLoo/MultiviewX_Perception) 可以得到符合 Wildtrack 格式的数据集。
 
 注意：
 
 1. 原 MultiviewX_FYP 现更名为 [MultiviewX_Perception](https://github.com/TsingLoo/MultiviewX_Perception)
 2. 原 [CalibrateTool](http://www.tsingloo.com/2023/03/01/0a2bf39019914a06954a4506b9f0ca37/) 已集成到了此处，将不再独立导出
-3. 开发使用的 Editor 版本为 2022.3.3f1，不保证之前版本（尤其是2022.2之前）的表现。 Perception 要求一定版本的 HDRP 。
+3. 开发使用的 Editor 版本为 2022.3.3f1，不保证之前版本（尤其是2022.2之前）的表现。 [Unity Perception Package](https://github.com/Unity-Technologies/com.unity.perception) 要求一定版本的 HDRP 。
 
-# Import
+# Support For [SyntheticHumans](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans)
+
+1. 添加 WildPerception、 [SyntheticHumans Package](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans#synthetichumans-package-unity-computer-vision) 到您的项目中，推荐导入 SyntheticHumans 官方提供的 Samples，具体过程请参考：[Install Packages and Set Things Up](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans/wiki/Synthetic-Humans-Tutorial#step-2-install-packages-and-set-things-up)
+
+2. 为 TsingLoo.WildPerception.asmdef 添加 AssemblyDefinitionReferences，选择 SyntheticHumans 提供的 Unity.CV.SyntheticHumans.Runtime，而后在页面底部右下角点击 Apply，保存。
+
+   ![选择 SyntheticHumans 提供的 Unity.CV.SyntheticHumans.Runtime](http://images.tsingloo.com/image-20231110130053825.png)
+
+   ![在页面底部右下角点击 Apply，保存](http://images.tsingloo.com/image-20231110130749018.png)
+
+3. 找到 `RuntimeModelProvider.cs` 脚本，更改 false 为 true
+
+   ![更改 false 为 true](http://images.tsingloo.com/image-20231110130358289.png)
+
+   4. 将 RuntimeModelProvider 组件分配给场景
+
+      ![将 RuntimeModelProvider 组件分配给场景](http://images.tsingloo.com/image-20231110130712582.png)
+
+      5. 移除其他的ModelProvider
+
+      ![移除其他的ModelProvider](http://images.tsingloo.com/image-20231110130947074.png)
+
+      
+
+      6. 添加 HumanGenerationConfig，Config 的具体配置请参考此文档下半部分：[Generate Your First Humans](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans/wiki/Synthetic-Humans-Tutorial#step-3-generate-your-first-humans)
+
+         ![添加 HumanGenerationConfig](http://images.tsingloo.com/image-20231110131159959.png)
+
+         7. 运行
+
+# [Import]()
 
 有两种方法可以将 WildPerception 包添加到您的项目中。
 
@@ -137,12 +167,12 @@ Camera Manager 管理并控制着相机相关的内容，您可以在这里配�
 | Default Animator        | 人物模型使用的默认动画控制器                                 |
 | Add_human_count         | 每次敲击空格将会新生成几个人物模型                           |
 | Preset_humans           | 场景初始化后生成多少个模型                                   |
-| Largest，Smallest，X，Y | 规定初始化生成模型的区域（绿色矩形辅助线）                   |
+| Largest，Smallest，X，Y | 规定初始化生成模型的区域（绿色矩形辅助线）以及行人的活动范围 |
 | Outter Bound Radius     | 人物模型回收边界，**请设置大一些，务必使此边界不与 Grid 相交**，否则可能出现Editor 卡死，这个问题会在后续工作中修复 |
 
 ## AbstractPedestrianModelProvider
 
-实现此类以能为 Pedestrians Manager 提供行人模型（将其拖拽到 Main Controller 的 Pedestrian Model Provider 属性槽中，默认为 LocalFilePedestrianModelProvider）。
+实现此类以能为 Pedestrians Manager 提供行人模型（将其拖拽到 Main Controller 的 Pedestrian Model Provider 属性槽中，默认为 LocalFilePedestrianModelProvider）
 
 ## CalibrateTool 
 

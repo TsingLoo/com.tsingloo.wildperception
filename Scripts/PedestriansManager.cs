@@ -148,8 +148,12 @@ namespace WildPerception
 
         void SpawnHuman(Vector3 SpawnPosition)
         {
-            GameObject human = Instantiate(pedestrianModelProvider.GetPedestrianModel(), SpawnPosition, UnityEngine.Random.rotation);
-            var ani = human.GetComponent<Animator>();
+            GameObject human = pedestrianModelProvider.GetPedestrianModel();
+
+            human.transform.position = SpawnPosition;
+            human.transform.rotation = UnityEngine.Random.rotation;
+
+           var ani = human.GetComponent<Animator>();
             if (ani != null && ani.avatar != null && ani.avatar.isValid)
             {
                 if (ani.runtimeAnimatorController == null)
@@ -177,6 +181,8 @@ namespace WildPerception
             {
                 PID = UnityEngine.Random.Range(0, 1000);
             }
+
+            human.name = $"{PID}";
 
             bound.PID = PID;
         }

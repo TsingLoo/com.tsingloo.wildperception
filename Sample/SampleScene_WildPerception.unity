@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &102135247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 911568766210222997, guid: 0919d83cb98a4ae4a8619660acd7e724,
+    type: 3}
+  m_PrefabInstance: {fileID: 2100360453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &176774566
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,6 +892,11 @@ PrefabInstance:
       objectReference: {fileID: 1507179294}
     - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
         type: 3}
+      propertyPath: pedestrianModelProvider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201622316288865460, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
       propertyPath: Center_HumanSpawn_CameraLookAt
       value: 
       objectReference: {fileID: 389506193}
@@ -912,5 +923,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 911568766210222997, guid: 0919d83cb98a4ae4a8619660acd7e724,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2100360467}
   m_SourcePrefab: {fileID: 100100000, guid: 0919d83cb98a4ae4a8619660acd7e724, type: 3}
+--- !u!114 &2100360467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102135247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8261c316bd51a2b428ed924626f48362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humanGenerationConfigs:
+    collapsed: 0
+    probabilities:
+    - 1
+    uniform: 1
+    m_Categories:
+    - {fileID: 11400000, guid: c293dfeecdf1cf04a8eec575b14584cc, type: 2}
+    m_Sampler:
+      range:
+        minimum: 0
+        maximum: 1
+      <minAllowed>k__BackingField: 0
+      <maxAllowed>k__BackingField: 0
+      <shouldCheckValidRange>k__BackingField: 0
+    m_NormalizedProbabilities: []

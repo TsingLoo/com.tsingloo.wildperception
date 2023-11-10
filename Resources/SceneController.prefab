@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2201622316288865460
 MonoBehaviour:
@@ -51,7 +51,7 @@ MonoBehaviour:
   GridOrigin_OpenCV: {fileID: 0}
   Center_HumanSpawn_CameraLookAt: {fileID: 0}
   HandPlacedCameraParent: {fileID: 0}
-  MultiviewX_Perception_Folder: D:/PycharmProjects/MultiviewX_Perception
+  MultiviewX_Perception_Folder: ..\MultiviewX_Perception
   pedestrianModelProvider: {fileID: 830560474794298802}
   cameraManager: {fileID: 0}
   pedestriansManager: {fileID: 0}
@@ -70,7 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb34a68e3c74b7187b2d98e1f3f8822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model_PATH: D:/UnityProjects/com.tsingloo.wildperception/Resources/Models
+  RandomPickModels: 0
+  model_PATH: ..\com.tsingloo.wildperception\Resources\Models
 --- !u!114 &911568766210223018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +84,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6960d8571ab21040b1bdafb54d8a13c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BeginFrameCount: 100
+  TotalWantedFramesCount: 25
+  FirstDroppedFrameCount: 150
+  cams: []
+  gridOrigin: {fileID: 0}
+  center: {fileID: 0}
+  CameraPrefab: {fileID: 7659203076679252285, guid: 7887744530ff05c499cf03603918b9d1,
+    type: 3}
   cameraPlaceType: 0
   level: 1
   numsPerLevel: 3
@@ -92,13 +99,8 @@ MonoBehaviour:
   majorAxis: 3
   minorAxis: 2
   handPlacedCameraParent: {fileID: 0}
-  totalwantedFramesCount: 25
-  center: {fileID: 0}
-  cams: []
-  gridOrigin: {fileID: 0}
+  popWarning: 0
   drawEllipseGizmos: 1
-  CameraPrefab: {fileID: 7659203076679252285, guid: 7887744530ff05c499cf03603918b9d1,
-    type: 3}
 --- !u!114 &911568766210223017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,19 +113,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c90164bfccaf8441b9bc2b194e855ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultAnimator: {fileID: 9100000, guid: b410a9f068a479b419be870a718cc555, type: 2}
-  PedestrianBehaviour: {fileID: 0}
   pedestrianModelProvider: {fileID: 0}
-  add_human_count: 3
-  preset_humans: 20
+  TotalHumanCount: 0
   largestX: 6.65
   smallestX: -5.67
   largestZ: 5.77
   smallestZ: -4.76
   outterBoundRadius: 15
+  defaultAnimator: {fileID: 9100000, guid: b410a9f068a479b419be870a718cc555, type: 2}
   walkingSpeed: 1
+  baseOffset: 0
   bounds_list: []
   PID_List: 
+  popWarning: 0
   DrawRespawnArea: 1
   DrawOutterBound: 1
 --- !u!114 &4269936379426897461
@@ -163,6 +165,7 @@ MonoBehaviour:
   RJUST_WIDTH: 4
   tRandomOffset: 4.37
   rRandomOffset: 120
+  popWarning: 0
   drawChessboard: 1
   drawGrid: 1
   drawScaling: 1

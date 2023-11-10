@@ -1,5 +1,4 @@
 using System.IO;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -39,8 +38,7 @@ namespace WildPerception
                     // Check if the path was selected (cancel was not pressed)
                     if (!string.IsNullOrEmpty(selectedPath))
                     {
-                        // Check if 'run_all.py' exists in the selected directory
-                        if (File.Exists(Path.Combine(selectedPath, "run_all.py")))
+                        if (UtilExtension.CheckPythonPath(selectedPath, true))
                         {
                             multiviewXPerceptionFolderProp.stringValue = selectedPath;
                             serializedObject.ApplyModifiedProperties(); // Apply the changes to the serialized object
@@ -87,61 +85,6 @@ namespace WildPerception
             serializedObject.ApplyModifiedProperties();
         }
     }
-
-    [CustomEditor(typeof(LocalFilePedestrianModelProvider))]
-    public class LocalFileModelProviderEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            // Draw the default inspector
-            DrawDefaultInspector();
-
-            LocalFilePedestrianModelProvider provider = (LocalFilePedestrianModelProvider)target;
-
-            // Add a button to open the folder panel
-            if (GUILayout.Button("Select Pedestrian Model Path"))
-            {
-                // Open folder panel and get the selected path
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Model Folder", "", "");
-
-                // If a path was selected (cancel wasn't pressed)
-                if (!string.IsNullOrEmpty(selectedPath))
-                {
-                    // Check if the selected path includes "Resources/Models"
-                    if (!selectedPath.Contains("Resources/Models"))
-                    {
-                        EditorUtility.DisplayDialog("Invalid Path",
-                            "The selected path does not include 'Resources/Models'. Please select a valid folder.",
-                            "OK");
-                        return;
-                    }
-
-                    // Get all files in the selected directory
-                    string[] files = Directory.GetFiles(selectedPath);
-
-                    // Check if the directory contains only .prefab files and their .meta files
-                    if (files.Any(
-                            file => Path.GetExtension(file) != ".prefab" && Path.GetExtension(file) != ".meta"))
-                    {
-                        EditorUtility.DisplayDialog("Invalid Contents",
-                            "The selected folder must contain only .prefab files and their respective .meta files.",
-                            "OK");
-                        return;
-                    }
-
-                    // If everything is fine, set the selected path
-                    provider.model_PATH = selectedPath;
-
-                    // Mark the object as changed so the new path is saved
-                    EditorUtility.SetDirty(provider);
-                }
-            }
-
-            // When everything is setup, we can use a button or something similar to actually load the models if needed.
-            // For instance, a "Load Models" button here that calls provider.LoadModels() or similar, depending on your setup.
-        }
-    }
-
 
     public class AddSceneControllerEditorWindow : EditorWindow
     {

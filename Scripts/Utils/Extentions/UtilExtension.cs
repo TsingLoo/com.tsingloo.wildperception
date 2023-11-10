@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -78,6 +79,20 @@ namespace WildPerception
                     ((GameObject)obj).gameObject.SetActive(active);
                 }
             }
+        }
+
+        public static bool CheckPythonPath(string path, bool fromEditor = false)
+        {
+            if (!File.Exists(Path.Combine(path, "run_all.py")))
+            {
+                if (!fromEditor)
+                {
+                    UtilExtension.QuitWithLogError($"Wrong MultiviewX_Perception_Folder: {path}");   
+                }
+                return false;
+            }
+
+            return true;
         }
     }
 }

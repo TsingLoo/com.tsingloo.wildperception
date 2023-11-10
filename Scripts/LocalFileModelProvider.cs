@@ -10,21 +10,18 @@ namespace WildPerception
     {
         List<string> usedHumanModels = new List<string>(); // List to keep track of used human model names
 
+        [SerializeField] bool RandomPickModels = true;
+        int modelFileIndex = 0;
+
         /// <summary>
         /// The selected folder path must exactly contains "Resources/Model", for example: D:/UnityProjects/com.tsingloo.wildperception/Resources/Models
         /// </summary>
-        public string model_PATH = @"Please Select Model Folder";
+        public string model_PATH = @"..\com.tsingloo.wildperception\Resources\Models";
 
         private void Awake()
         {
             // Check if the selected path includes "Resources/Models"
-            if (!model_PATH.Contains("Resources/Models"))
-            {
-                UtilExtension.QuitWithLogError(
-                    $"[{nameof(LocalFilePedestrianModelProvider)}] The selected path does not include 'Resources/Models'. Please select a valid folder.");
-                return;
-            }
-
+            if (!LocalFilePedestrianModelProviderExtention.CheckModelPath(model_PATH)) return;
             // Get all files in the selected directory
             string[] files = Directory.GetFiles(model_PATH);
 
@@ -54,14 +51,21 @@ namespace WildPerception
             }
             else
             {
-                while (isDuplicateModel)
+                if (RandomPickModels)
                 {
-                    humanModelPath = humanModelFiles[UnityEngine.Random.Range(0, humanModelFiles.Length)];
-
-                    if (!usedHumanModels.Contains(humanModelPath))
+                    while (isDuplicateModel)
                     {
-                        isDuplicateModel = false;
+                        humanModelPath = humanModelFiles[UnityEngine.Random.Range(0, humanModelFiles.Length)];
+
+                        if (!usedHumanModels.Contains(humanModelPath))
+                        {
+                            isDuplicateModel = false;
+                        }
                     }
+                }
+                else
+                {
+                    humanModelPath = humanModelFiles[modelFileIndex];
                 }
 
                 // Find the index of "Resources" in the file path
@@ -72,7 +76,7 @@ namespace WildPerception
                 {
                     // Remove the "Resources" part and the ".prefab" postfix from the file path
                     humanModelPath = humanModelPath.Substring(resourcesIndex + "Resources".Length + 1);
-                    //Debug.Log(humanModel);
+                    Debug.Log(humanModelPath);
                     //humanModel = System.IO.Path.GetFileNameWithoutExtension(humanModel);
                 }
                 else
@@ -84,15 +88,100 @@ namespace WildPerception
                 humanModelPath = humanModelPath.Replace(".prefab", "");
                 Debug.Log($"[{nameof(LocalFilePedestrianModelProvider)}] Reading model {humanModelPath}");
                 GameObject humanPrefab = Resources.Load<GameObject>(humanModelPath);
-                usedHumanModels.Add(humanModelPath);
-                if (usedHumanModels.Count >= humanModelFiles.Length)
+
+                if (RandomPickModels)
                 {
-                    usedHumanModels.Clear();
+                    usedHumanModels.Add(humanModelPath);
+                    if (usedHumanModels.Count >= humanModelFiles.Length)
+                    {
+                        usedHumanModels.Clear();
+                    }
+                }
+                else
+                {
+                    if (modelFileIndex + 1 == humanModelFiles.Length)
+                    {
+                        modelFileIndex = 0;
+                    }
+
+                    modelFileIndex++;
                 }
 
-                return humanPrefab;
-                //GameObject humanPrefab = Resources.Load<GameObject>(PATH + Randoms(0, modelCount, preset_humans).ToString());
+                return Instantiate(humanPrefab);
             }
         }
     }
+
+    public static class LocalFilePedestrianModelProviderExtention
+    {
+        public static bool CheckModelPath(string path, bool fromEditor = false)
+        {
+            // Check if the selected path includes "Resources/Models"
+            if (!path.Contains(Path.Combine("Resources", "Models")))
+            {
+                if (!fromEditor)
+                {
+                    UtilExtension.QuitWithLogError(
+                        $"[{nameof(LocalFilePedestrianModelProvider)}] The selected path does not include {Path.Combine("Resources", "Models")}. Please select a valid folder.");
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+#if UNITY_EDITOR
+    [UnityEditor.CustomEditor(typeof(LocalFilePedestrianModelProvider))]
+    public class LocalFileModelProviderEditor : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            // Draw the default inspector
+            DrawDefaultInspector();
+
+            LocalFilePedestrianModelProvider provider = (LocalFilePedestrianModelProvider)target;
+
+            // Add a button to open the folder panel
+            if (GUILayout.Button("Select Pedestrian Model Path"))
+            {
+                // Open folder panel and get the selected path
+                string selectedPath = UnityEditor.EditorUtility.OpenFolderPanel("Select Model Folder", "", "");
+
+                // If a path was selected (cancel wasn't pressed)
+                if (!string.IsNullOrEmpty(selectedPath))
+                {
+                    if (!LocalFilePedestrianModelProviderExtention.CheckModelPath(selectedPath, true))
+                    {
+                        UnityEditor.EditorUtility.DisplayDialog("Invalid Path",
+                            "The selected path does not include 'Resources/Models'. Please select a valid folder.",
+                            "OK");
+                        return;
+                    }
+
+                    // Get all files in the selected directory
+                    string[] files = Directory.GetFiles(selectedPath);
+
+                    // Check if the directory contains only .prefab files and their .meta files
+                    if (files.Any(
+                            file => Path.GetExtension(file) != ".prefab" && Path.GetExtension(file) != ".meta"))
+                    {
+                        UnityEditor.EditorUtility.DisplayDialog("Invalid Contents",
+                            "The selected folder must contain only .prefab files and their respective .meta files.",
+                            "OK");
+                        return;
+                    }
+
+                    // If everything is fine, set the selected path
+                    provider.model_PATH = selectedPath;
+
+                    // Mark the object as changed so the new path is saved
+                    UnityEditor.EditorUtility.SetDirty(provider);
+                }
+            }
+        }
+    }
+
+#endif
 }
