@@ -22,21 +22,21 @@ WildPerception 是一个利用 [Unity Perception Package](https://github.com/Uni
 
    ![更改 false 为 true](http://images.tsingloo.com/image-20231110130358289.png)
 
-   4. 将 RuntimeModelProvider 组件分配给场景
+4. 将 RuntimeModelProvider 组件分配给场景
 
       ![将 RuntimeModelProvider 组件分配给场景](http://images.tsingloo.com/image-20231110130712582.png)
 
-      5. 移除其他的ModelProvider
+5. 移除其他的ModelProvider
 
       ![移除其他的ModelProvider](http://images.tsingloo.com/image-20231110130947074.png)
 
       
 
-      6. 添加 HumanGenerationConfig，Config 的具体配置请参考此文档下半部分：[Generate Your First Humans](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans/wiki/Synthetic-Humans-Tutorial#step-3-generate-your-first-humans)
+6. 添加 HumanGenerationConfig，Config 的具体配置请参考此文档下半部分：[Generate Your First Humans](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans/wiki/Synthetic-Humans-Tutorial#step-3-generate-your-first-humans)
 
-         ![添加 HumanGenerationConfig](http://images.tsingloo.com/image-20231110131159959.png)
+![添加 HumanGenerationConfig](http://images.tsingloo.com/image-20231110131159959.png)
 
-         7. 运行
+7. 运行
 
 # [Import]()
 
