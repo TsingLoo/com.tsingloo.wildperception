@@ -239,7 +239,7 @@ MonoBehaviour:
   firstCaptureFrame: 200
   captureTriggerMode: 0
   manualSensorAffectSimulationTiming: 0
-  simulationDeltaTime: 0.3
+  simulationDeltaTime: 0.5
   framesBetweenCaptures: 0
   showVisualizations: 0
   alphaThreshold: 0.1
@@ -267,3 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraIndex: 0
   filePath: \matchings
+  EndExportEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  totalFramesCount: 2147483647

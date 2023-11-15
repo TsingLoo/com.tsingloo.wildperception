@@ -101,7 +101,7 @@ namespace WildPerception
             {
                 float X = Random.Range(smallestX, largestX);
                 float Z = Random.Range(smallestZ, largestZ);
-                SpawnPosition = GetComponent<MainController>().Center_HumanSpawn_CameraLookAt.transform.position +
+                SpawnPosition = GetComponent<MainController>().Center_HumanSpawn.transform.position +
                                 new Vector3(X, 0, Z);
                 SpawnPosition = new Vector3(SpawnPosition.x, cameraManager.gridOrigin.position.y, SpawnPosition.z);
                 SpawnHuman(SpawnPosition);
@@ -172,6 +172,7 @@ namespace WildPerception
             var bound = human.GetOrAddComponent<PersonBound>();
             bound.gridOriginPos = mainController.GridOrigin_OpenCV.transform.position;
             var pc = human.GetOrAddComponent<GoRandomBasePedestrianBehaviour>();
+            pc.walkRandomCenter = mainController.Center_HumanSpawn.transform.position;
             pc.pedestriansManager = this;
             nav.speed = walkingSpeed;
             nav.baseOffset = baseOffset;
@@ -207,29 +208,29 @@ namespace WildPerception
         {
             MainController mc = GetComponent<MainController>();
 
-            if (mc.Center_HumanSpawn_CameraLookAt != null)
+            if (mc.Center_HumanSpawn != null)
             {
                 if (DrawRespawnArea)
                 {
                     Gizmos.color = Color.green;
                     Gizmos.DrawLine(
-                        new Vector3(smallestX, 0, smallestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position,
-                        new Vector3(largestX, 0, smallestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position);
+                        new Vector3(smallestX, 0, smallestZ) + mc.Center_HumanSpawn.transform.position,
+                        new Vector3(largestX, 0, smallestZ) + mc.Center_HumanSpawn.transform.position);
                     Gizmos.DrawLine(
-                        new Vector3(smallestX, 0, smallestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position,
-                        new Vector3(smallestX, 0, largestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position);
+                        new Vector3(smallestX, 0, smallestZ) + mc.Center_HumanSpawn.transform.position,
+                        new Vector3(smallestX, 0, largestZ) + mc.Center_HumanSpawn.transform.position);
                     Gizmos.DrawLine(
-                        new Vector3(largestX, 0, largestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position,
-                        new Vector3(largestX, 0, smallestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position);
+                        new Vector3(largestX, 0, largestZ) + mc.Center_HumanSpawn.transform.position,
+                        new Vector3(largestX, 0, smallestZ) + mc.Center_HumanSpawn.transform.position);
                     Gizmos.DrawLine(
-                        new Vector3(largestX, 0, largestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position,
-                        new Vector3(smallestX, 0, largestZ) + mc.Center_HumanSpawn_CameraLookAt.transform.position);
+                        new Vector3(largestX, 0, largestZ) + mc.Center_HumanSpawn.transform.position,
+                        new Vector3(smallestX, 0, largestZ) + mc.Center_HumanSpawn.transform.position);
                 }
 
                 if (DrawOutterBound)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawWireSphere(mc.Center_HumanSpawn_CameraLookAt.transform.position, outterBoundRadius);
+                    Gizmos.DrawWireSphere(mc.Center_HumanSpawn.transform.position, outterBoundRadius);
                 }
             }
             else if (popWarning)

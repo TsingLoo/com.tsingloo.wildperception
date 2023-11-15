@@ -12,6 +12,8 @@ namespace WildPerception
         [SerializeField] private float walkingSpeedBias;
 
 
+        public Vector3 walkRandomCenter;
+
         void Start()
         {
             nav = GetComponent<NavMeshAgent>();
@@ -20,7 +22,7 @@ namespace WildPerception
             nav.speed = nav.speed + walkingSpeedBias;
 
             gameObject.transform.localScale = Vector3.one * CalibrateTool.Instance.Scaling;
-            InvokeRepeating(nameof(GoToRandomPosition), 2, 2 + Random.Range(0f, 2f));
+            InvokeRepeating(nameof(GoToRandomPosition), 2, 10 + Random.Range(-4f, 4f));
             //respawnController SpawnController = GameObject.Find("SpawnController").GetComponent<respawnController>();
             //smallestX = SpawnController.smallestX;
             //largestX = SpawnController.largestX;
@@ -75,8 +77,8 @@ namespace WildPerception
         {
 
             float y = transform.position.y;
-            float x = Random.Range(pedestriansManager.smallestX, pedestriansManager.largestX);
-            float z = Random.Range(pedestriansManager.smallestZ, pedestriansManager.largestZ);
+            float x = Random.Range(pedestriansManager.smallestX + walkRandomCenter.x, pedestriansManager.largestX + walkRandomCenter.x);
+            float z = Random.Range(pedestriansManager.smallestZ + walkRandomCenter.z, pedestriansManager.largestZ + walkRandomCenter.z);
 
             nav.destination = new Vector3(x, y, z);
             nav.isStopped = false;

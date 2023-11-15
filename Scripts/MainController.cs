@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.GroundTruth.Consumers;
 using UnityEngine.Perception.Settings;
+using UnityEngine.Serialization;
 
 namespace WildPerception {	
 	[RequireComponent(typeof(PedestriansManager))]
@@ -13,8 +14,9 @@ namespace WildPerception {
     #region Inspector
     
 	    public GameObject GridOrigin_OpenCV;
-	    public GameObject Center_HumanSpawn_CameraLookAt;
+	    public GameObject Center_HumanSpawn;
 	    public GameObject HandPlacedCameraParent;
+		public GameObject CameraLookat;
 
 	    [Header("Python Code Path")]
 	    public string MultiviewX_Perception_Folder = "../MultiviewX_Perception";
@@ -27,9 +29,10 @@ namespace WildPerception {
 	    public void InitScene() 
 	    {
 	        InitKeyObj(nameof(GridOrigin_OpenCV));
-	        InitKeyObj(nameof(Center_HumanSpawn_CameraLookAt));
+	        InitKeyObj(nameof(Center_HumanSpawn));
 	        InitKeyObj(nameof(HandPlacedCameraParent));
-	
+	        InitKeyObj(nameof(CameraLookat));
+	        
 	        AssignTransform();
 	    }
 	
@@ -47,10 +50,10 @@ namespace WildPerception {
 
         [HideInInspector] public CameraManager cameraManager;
 	    [HideInInspector] public PedestriansManager pedestriansManager;
-	    [HideInInspector] public CalibrateTool calibrateTool;
-	
-	    //[HideInInspector] public string Image_subsets;
-	    [HideInInspector] public string matchings;
+		[HideInInspector] public CalibrateTool calibrateTool;
+
+		//[HideInInspector] public string Image_subsets;
+		[HideInInspector] public string matchings;
 	    [HideInInspector] public string validate;
 	
 	    private void Awake()
@@ -71,10 +74,11 @@ namespace WildPerception {
 	
 	        cameraManager.handPlacedCameraParent = HandPlacedCameraParent.transform;
 	        cameraManager.gridOrigin = GridOrigin_OpenCV.transform;
-	        cameraManager.center = Center_HumanSpawn_CameraLookAt.transform;
-	
-	        calibrateTool.gridOrigin = GridOrigin_OpenCV.transform;
-	        calibrateTool.chessboardGenerateCenter = Center_HumanSpawn_CameraLookAt.transform;
+	        cameraManager.center = Center_HumanSpawn.transform;
+			cameraManager.cameraLookat = CameraLookat.transform;
+
+			calibrateTool.gridOrigin = GridOrigin_OpenCV.transform;
+	        calibrateTool.chessboardGenerateCenter = Center_HumanSpawn.transform;
 	    }
 	
 	    public void DeleteFolder(string foldername) 

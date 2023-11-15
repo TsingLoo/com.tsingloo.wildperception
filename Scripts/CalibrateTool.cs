@@ -667,9 +667,9 @@ namespace WildPerception
         private void OnDrawGizmos()
         {
             MainController m = GetComponent<MainController>();
-            if (m.Center_HumanSpawn_CameraLookAt != null && m.GridOrigin_OpenCV != null)
+            if (m.Center_HumanSpawn != null && m.GridOrigin_OpenCV != null)
             {
-                chessboardGenerateCenter = m.Center_HumanSpawn_CameraLookAt.transform;
+                chessboardGenerateCenter = m.Center_HumanSpawn.transform;
                 gridOrigin = m.GridOrigin_OpenCV.transform;
 
                 if (drawChessboard)
