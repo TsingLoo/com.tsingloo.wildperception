@@ -412,8 +412,8 @@ namespace WildPerception
             pysw.WriteLine("GRID_ORIGIN = [" + gridOrigin.position.x.ToString() + "," + gridOrigin.position.y.ToString() + "," + gridOrigin.position.z.ToString() + "]");
             pysw.WriteLine("NUM_CAM = " + camerasToCalibrate.Count().ToString());
             pysw.WriteLine("CHESSBOARD_COUNT = " + chessboardCount.ToString());
-            pysw.WriteLine(nameof(MAP_HEIGHT) + " = " +  MAP_HEIGHT.ToString());
             pysw.WriteLine(nameof(MAP_WIDTH) + " = " + MAP_WIDTH.ToString());
+            pysw.WriteLine(nameof(MAP_HEIGHT) + " = " +  MAP_HEIGHT.ToString());
             pysw.WriteLine(nameof(MAP_EXPAND) + " = " + MAP_EXPAND.ToString());
             pysw.WriteLine(nameof(IMAGE_WIDTH) + " = " + IMAGE_WIDTH.ToString());
             pysw.WriteLine(nameof(IMAGE_HEIGHT) + " = " + IMAGE_HEIGHT.ToString());
@@ -423,12 +423,20 @@ namespace WildPerception
             pysw.WriteLine(nameof(Scaling) + " = " + Scaling.ToString()); 
             pysw.WriteLine(@"NUM_FRAMES = 0");
             pysw.WriteLine(@"DATASET_NAME = ''");
-            pysw.WriteLine(@"#If you are using perception package: this should NOT be 'perception', output path of perception instead");
+            pysw.WriteLine(@"");
+            pysw.WriteLine(@"# If you are using perception package: this should NOT be 'perception', output path of perception instead");
             if (!PERCEPTION_PATH.Equals(@"f'perception'"))
             { 
                 PERCEPTION_PATH = $"'{PERCEPTION_PATH}'";
             } 
             pysw.WriteLine($"{nameof(PERCEPTION_PATH)} = {PERCEPTION_PATH}");
+            pysw.WriteLine(@"");
+            pysw.WriteLine(@"# The following is for -view configure only:");
+            pysw.WriteLine(@"");
+            pysw.WriteLine(@"# Define how to convert your unit length to meter, if you are using cm, then 0.01");
+            pysw.WriteLine(@"OverlapUnitConvert = 1.");
+            pysw.WriteLine(@"# Define how to translate cams to make the world origin and the grid origin is the same");
+            pysw.WriteLine(@"OverlapGridOffset = (0., 0., 0.)");
             pysw.Close();
         }
 	
