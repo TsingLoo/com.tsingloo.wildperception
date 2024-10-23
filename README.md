@@ -1,3 +1,20 @@
+# An end-to-end tracking framework via multi-view and temporal feature aggregation [[paper]](https://doi.org/10.1016/j.cviu.2024.104203)
+
+```
+@article{YANG2024104203,
+title = {An end-to-end tracking framework via multi-view and temporal feature aggregation},
+journal = {Computer Vision and Image Understanding},
+volume = {249},
+pages = {104203},
+year = {2024},
+issn = {1077-3142},
+doi = {https://doi.org/10.1016/j.cviu.2024.104203},
+author = {Yihan Yang and Ming Xu and Jason F. Ralph and Yuchen Ling and Xiaonan Pan},
+}
+```
+
+# WildPerception
+
 WildPerception 是一个利用 [Unity Perception Package](https://github.com/Unity-Technologies/com.unity.perception) 来生成大规模多视角视频数据集的工具。
 
 其允许用户导入自己的 Humanoid 人物模型，或者利用 [SyntheticHumans Package](https://github.com/Unity-Technologies/com.unity.cv.synthetichumans#synthetichumans-package-unity-computer-vision) 以合成人物模型，从而在自定义的场景中模拟行人。配合 [MultiviewX_Perception](https://github.com/TsingLoo/MultiviewX_Perception) 可以得到符合 Wildtrack 格式的数据集。
